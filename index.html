@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b6e6a"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
+<title>English First</title>
+<style>
+:root{--bg:#f3f8fa;--card:#fff;--ink:#1c1b4b;--mut:#6b7486;--ac:#3b27d8;--ac2:#f2b822;--line:#e3ebf0;--ok:#0f9d6b;--bad:#d1483f;--ci:#3b27d8;--cb:#ebe8fb;--cm:#d9d4f6}
+[data-d]{--bg:#0f1526;--card:#182038;--ink:#e9ecff;--mut:#98a2c4;--ac:#8f84ff;--line:#2a3452;--ok:#4cc582;--bad:#ef7b7b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Segoe UI",Tahoma,Arial,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;left:-90px;top:70px;width:250px;height:250px;border-radius:50%;background:#b8e9f3;opacity:.5;z-index:-1}
+body::after{content:"";position:fixed;right:-110px;bottom:60px;width:300px;height:300px;border-radius:50%;border:48px solid #f9dfa0;opacity:.5;z-index:-1}
+.app{max-width:1100px;margin:auto;padding:0 16px 110px}
+.top{display:flex;align-items:center;gap:10px;padding:14px 0;position:sticky;top:0;z-index:8;background:var(--bg)}
+.logo{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:34px;height:34px}.logo i{border-radius:4px}.logo i:nth-child(1){background:#f2b822}.logo i:nth-child(2){background:#58c4e6}.logo i:nth-child(3){background:#58c4e6}.logo i:nth-child(4){background:#ef7f5a}
+.top b{color:#2fb5e0;font-size:20px;white-space:nowrap}
+.top input{flex:1;min-width:0;border-radius:24px;padding:12px 16px;background:var(--card)}
+.ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;color:var(--ink)}
+.av{width:44px;height:44px;border-radius:50%;background:var(--ac2);display:grid;place-items:center;font-weight:700;color:#1c1b4b}
+h1{font-size:34px;font-weight:300;letter-spacing:.5px;margin:18px 0 12px}h2{font-size:20px;margin:6px 0}h3{font-size:16px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:14px 0}
+.dim{opacity:.6}.mut{color:var(--mut);font-size:14px}
+.btn,.btn2{border-radius:12px;padding:11px 18px;font:inherit;cursor:pointer;min-height:44px;border:1px solid var(--ac)}
+.btn{background:var(--ac);color:#fff}.btn2{background:none;color:var(--ac)}.btn:disabled{opacity:.4}
+.sks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:6px 0}
+.sk{background:var(--cb);color:var(--ci);border-radius:26px;padding:16px 16px 0;overflow:hidden}
+.sk.c2{--cb:#fbe9e0;--ci:#e8622c;--cm:#f8d5c4}.sk.c3{--cb:#dff7ee;--ci:#0aa874;--cm:#bff0dc}.sk.c4{--cb:#f4e3f9;--ci:#a51fcb;--cm:#e8c7f2}
+[data-d] .sk{--cb:#241f4d;--ci:#a79cff;--cm:#322b66}[data-d] .sk.c2{--cb:#3b2519;--ci:#ff8d5e;--cm:#51321f}[data-d] .sk.c3{--cb:#12392e;--ci:#34d6a0;--cm:#1a5141}[data-d] .sk.c4{--cb:#35183f;--ci:#d56bf2;--cm:#4a2358}
+.sk>.st{font-size:18px;font-weight:500}
+.sb{display:flex;justify-content:space-between;align-items:center;background:var(--cm);border-radius:16px;padding:10px 12px;margin-top:10px;font-size:13px;font-weight:600}.sb big{font-size:24px}
+.ring{--p:0;width:48px;height:48px;border-radius:50%;background:conic-gradient(var(--ci) calc(var(--p)*1%),#fff9 0);display:grid;place-items:center;flex:none}
+.ring i{font-style:normal;font-size:11px;font-weight:700;width:36px;height:36px;border-radius:50%;background:var(--cb);display:grid;place-items:center}
+.fl{margin:14px -16px 0;height:32px;background:var(--cm)}.fl b{display:flex;align-items:center;height:32px;padding:0 14px;border-radius:0 16px 16px 0;background:var(--ci);color:#fff;font-size:13px;width:max-content}
+.two{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}@media(max-width:760px){.two{grid-template-columns:1fr}}
+.tabsl{display:flex;gap:18px;border-bottom:1px solid var(--line);margin-bottom:10px}.tabsl button{background:none;border:0;border-bottom:4px solid transparent;font:inherit;font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink);padding:8px 0;cursor:pointer}.tabsl button.on{border-color:var(--ac2)}
+.tr{display:flex;align-items:stretch;border-radius:16px;background:var(--card);border:1px solid var(--line);margin:10px 0;overflow:hidden;box-shadow:0 4px 14px #1c1b4b10}
+.tr .pc{width:62px;background:#e3defa;color:#3b27d8;display:grid;place-items:center;font-weight:700}[data-d] .tr .pc{background:#322b66;color:#cfc8ff}
+.tr .mid{flex:1;padding:12px 14px}.tr .mid small{color:var(--mut)}
+.tr .go{width:82px;border:0;background:#eaf6fb;color:#0d4a63;font:inherit;font-weight:700;cursor:pointer}[data-d] .tr .go{background:#1f3550;color:#bfe6ff}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.cal i{font-style:normal;padding:7px 0;border-radius:10px;font-size:14px}.cal .dh{color:var(--mut);font-size:12px}.cal .st{background:#cfeee3;color:#0b6b4c;font-weight:700}.cal .td{outline:2px solid var(--ac2)}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:9;display:flex;justify-content:center;gap:4px;background:var(--card);border-top:1px solid var(--line);border-radius:22px 22px 0 0;padding:6px 8px env(safe-area-inset-bottom);box-shadow:0 -6px 24px #1c1b4b14}
+nav button{flex:0 1 96px;border:0;background:none;color:var(--mut);padding:6px 2px;font-size:10px;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;min-height:56px;border-radius:14px}
+nav button.on{color:#b57f00;background:#fdf0cf}[data-d] nav button.on{background:#3d3513;color:#f2b822}nav span{display:block;font-size:21px}
+.row{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:12px 2px;font:inherit;color:var(--ink);cursor:pointer;min-height:48px}.row.lock{opacity:.45;cursor:default}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}.stat b{font-size:24px;display:block;color:var(--ac)}
+.bar{height:8px;border-radius:5px;background:var(--line);overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--ac2)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:13px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer;min-height:48px}
+.opt[dir=rtl]{text-align:right;font-size:19px}.opt.ok{border-color:var(--ok)}.opt.no{border-color:var(--bad)}
+.w{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}.w b{flex:1}.ar{font-size:19px;direction:rtl}
+.chip{display:inline-block;margin:4px;padding:9px 13px;border-radius:10px;border:1px solid var(--ac);background:none;color:var(--ink);font:inherit;cursor:pointer}
+.line{min-height:50px;border-bottom:2px solid var(--line);margin:10px 0}.todo.d{text-decoration:line-through;color:var(--mut)}
+input,select{font:inherit;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);max-width:100%}
+.set{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.cert{text-align:center;border:6px double var(--ac2);padding:28px;background:var(--card)}
+.vid{aspect-ratio:16/9;background:#0b1a20;border-radius:18px;overflow:hidden;display:grid;place-items:center;color:#9fb4bb;text-align:center;padding:12px}.vid iframe,.vid video{width:100%;height:100%;border:0}
+.tabs{display:flex;gap:8px;margin:10px 0}.tabs button{flex:1;padding:8px 4px}.auth{max-width:380px;margin:8vh auto}.auth input{width:100%;margin:6px 0}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ac2);outline-offset:2px}
+@media print{nav,.noprint,.top{display:none}body{background:#fff}body::before,body::after{display:none}.app{padding:0}}
+@media(prefers-reduced-motion:no-preference){.bar i{transition:width .4s}}
+</style></head><body>
+<div class="app" id="app"></div>
+<nav id="nav"></nav>
+<script src="levels.js"></script>
+<script src="videos.js"></script>
+<script>
+
+const LV=['Beginner 1','Beginner 2','Beginner 3','Elementary 1','Elementary 2','Elementary 3','Pre-Intermediate 1','Pre-Intermediate 2','Pre-Intermediate 3','Intermediate 1','Intermediate 2','Intermediate 3','Upper-Intermediate 1','Upper-Intermediate 2','Upper-Intermediate 3','Upper-Intermediate 4','Advanced 1','Advanced 2','Advanced 3','Advanced 4'];
+const TH=window.THEMES||[],CT=window.CONTENT||{};
+/* Placement bank: [level, question, options or '' for typed, answer, optional passage] */
+const PB=[[1,'I ___ a student.','am|is|are|be','am'],[1,'Which word is a number?','three|house|blue|water','three'],[2,'She ___ coffee every morning.','drinks|drink|drinking|drank','drinks'],[2,'There ___ three books on the table.','are|is|am|be','are'],[3,'What time ___ you get up?','do|does|are|is','do'],[3,'This is ___ apple.','an|a|the|some','an'],[4,'Yesterday we ___ to the market.','went|go|goes|going','went'],[4,'My sister is ___ than me.','taller|tall|tallest|more tall','taller'],[5,'I ___ TV when the phone rang.','was watching|watched|am watching|watch','was watching'],[5,'How ___ water do you drink a day?','much|many|few|any','much'],[6,'If it rains, we ___ at home.','will stay|stay|stayed|would stay','will stay'],[6,'I have lived here ___ 2019.','since|for|during|from','since'],[7,'She has ___ finished her homework.','already|yet|since|ago','already'],[7,'The book ___ by millions of people.','was read|read|reading|has read','was read'],[8,'I wish I ___ more time.','had|have|has|will have','had'],[8,'He is used to ___ early.','getting up|get up|got up|gets up','getting up'],[9,'Why did Omar stop buying lunch?','To save money|He disliked the food|He was ill|His school closed','To save money','Omar wanted to save money, so he stopped buying lunch at school and brought food from home. After six months he had enough to buy a bicycle.'],[9,'By the time we arrived, the film ___.','had started|started|has started|was starting','had started'],[10,'Neither of the answers ___ correct.','is|are|were|be','is'],[10,'Write the past participle of “write”.','','written'],[11,'She suggested ___ a taxi.','taking|to take|take|took','taking'],[11,'Hardly ___ the door when the phone rang.','had he opened|he opened|did he open|he had opened','had he opened'],[12,'The meeting was cancelled ___ the manager’s illness.','owing to|despite|unless|whereas','owing to'],[12,'Choose the closest meaning of “reluctant”.','unwilling|eager|careful|tired','unwilling'],[13,'What do critics say about the policy?','It shifted the problem elsewhere|It removed traffic completely|It was never applied|It shortened commutes','It shifted the problem elsewhere','Although the new policy was meant to reduce traffic, critics argue that it merely moved congestion to neighbouring districts, where residents now face longer commutes.'],[13,'Had I known, I ___ differently.','would have acted|would act|had acted|acted','would have acted'],[14,'Choose the synonym of “meticulous”.','careful|careless|quick|rude','careful'],[14,'Not only ___ late, but he also forgot the files.','was he|he was|is he|he is','was he'],[15,'The evidence is ___; no one can deny it.','irrefutable|ambiguous|trivial|dubious','irrefutable'],[15,'She is said ___ in three languages.','to be fluent|being fluent|that fluent|be fluent','to be fluent'],[16,'His speech was full of ___: it said a lot but meant little.','platitudes|insights|statistics|anecdotes','platitudes'],[16,'By next year she ___ here for a decade.','will have worked|will work|has worked|works','will have worked'],[17,'What is the author’s real attitude?','Critical|Admiring|Neutral|Confused','Critical','The author’s irony is subtle: while ostensibly praising the committee’s diligence, each compliment exposes another failure of its judgement.'],[17,'Write the noun form of “persuade”.','','persuasion'],[18,'Were it not for his support, the project ___.','would have collapsed|collapsed|will collapse|has collapsed','would have collapsed'],[18,'Choose the closest meaning of “ephemeral”.','short-lived|ancient|valuable|hidden','short-lived'],[19,'The politician’s answer was deliberately ___, avoiding any firm commitment.','equivocal|candid|emphatic|forthright','equivocal'],[19,'Seldom ___ such dedication.','does one see|one sees|one does see|sees one','does one see'],[20,'The theory, though elegant, remains ___ by empirical evidence.','unsubstantiated|corroborated|exemplified|verified','unsubstantiated'],[20,'Write the adjective formed from “ubiquity”.','','ubiquitous']];
+const G=[['He ___ to school every day.',['go','goes','going','gone'],'goes'],['She ___ a teacher.',['am','are','is','be'],'is'],['They ___ reading now.',['is','am','are','be'],'are'],['I ___ not understand.',['do','does','is','am'],'do'],['There ___ two books on the table.',['is','are','am','be'],'are'],['Yesterday I ___ to the market.',['go','goes','went','going'],'went']];
+
+const LS=[],LM={};
+Object.keys(CT).forEach(k=>{const n=+k;CT[k].forEach((u,ui)=>u[1].forEach((l,li)=>{const gu=(n-1)*4+ui,o={id:gu*3+li,lv:n,gu,ui,n:li+1,ut:u[0],t:l[0],w:l[1].split(';').map(x=>{const p=x.split('|');return{en:p[0],ar:p[1]}}),s:l[2]};LS.push(o);LM[o.id]=o}))});
+const ALL=LS.flatMap(l=>l.w);let POOL=ALL,OL=0;
+const lvWords=n=>LS.filter(l=>l.lv==n).flatMap(l=>l.w);
+/* ---------- State ---------- */
+let S={cid:{},start:0,ut:{},lt:{},placed:0,sk:{},done:{},vocab:{},mist:[],days:{},fav:{},test:null,set:{theme:'system',acc:'en-US',rate:.9,tr:true,name:''}};
+let USER=localStorage.getItem('ef_cur')||'';
+const ACC=()=>{try{return JSON.parse(localStorage.getItem('ef_acc')||'{}')}catch(e){return{}}};
+const KEY=()=>'ef2_'+USER;
+function loadS(){try{Object.assign(S,JSON.parse(localStorage.getItem(KEY())||'{}'))}catch(e){}}
+const save=()=>{if(USER)try{localStorage.setItem(KEY(),JSON.stringify(S))}catch(e){}};
+async function hash(p,s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let x=5381;for(const c of s+p)x=(x*33^c.charCodeAt(0))>>>0;return'x'+x}}
+let AM='in';
+function vAuth(){const up=AM=='up';return`<div class="card auth"><h1>English First</h1><p class=mut>${up?'Create your account':'Sign in to continue'}</p>${up?'<input id=an placeholder="Your name" maxlength=30>':''}<input id=au placeholder=Username maxlength=20 autocapitalize=none><input id=ap type=password placeholder="Password (6+ characters)"><p id=ae style="color:var(--bad)"></p><button class=btn onclick="auth()">${up?'Create account':'Sign in'}</button> <button class=btn2 onclick="AM='${up?'in':'up'}';draw()">${up?'I have an account':'Create account'}</button><p class=mut>Accounts are stored on this device only.</p></div>`}
+async function auth(){const u=$('#au').value.trim().toLowerCase(),p=$('#ap').value,L=ACC(),e=m=>$('#ae').textContent=m,nm=AM=='up'?$('#an').value.trim():'';
+ if(!/^[a-z0-9_]{3,20}$/.test(u))return e('Username: 3 to 20 letters, numbers or _');if(p.length<6)return e('Password must have at least 6 characters.');
+ if(AM=='up'){if(L[u])return e('This username is taken.');const s=Math.random().toString(36).slice(2);L[u]={s,h:await hash(p,s)};localStorage.setItem('ef_acc',JSON.stringify(L))}
+ else{const a=L[u];if(!a||a.h!=await hash(p,a.s))return e('Wrong username or password.')}
+ USER=u;localStorage.setItem('ef_cur',u);loadS();if(nm)S.set.name=nm;save();theme();go('home')}
+if(USER)loadS();
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const $=s=>document.querySelector(s);
+const doneN=()=>Object.keys(S.done).length;
+const avg=()=>{const v=Object.values(S.done);return v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):0};
+const dueN=()=>Object.values(S.vocab).filter(v=>v.due<=Date.now()).length;
+/* ---------- Audio: browser speech only (no music, no sound effects) ---------- */
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=S.set.acc;u.rate=S.set.rate;speechSynthesis.speak(u)}catch(e){}}
+function theme(){const t=S.set.theme,d=t=='dark'||(t=='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.toggleAttribute('data-d',d)}
+
+/* ---------- Access rules ---------- */
+const lvOpen=n=>n==1||n<=(S.start||1)||S.lt[n-1]>=75;
+const lessonOpen=l=>{if(!lvOpen(l.lv))return false;if(l.lv<(S.start||1)||l.id%12==0)return true;if(l.n==1)return S.ut[l.gu-1]>=75;return S.done[l.id-1]!=null};
+const utOpen=gu=>{const n=Math.floor(gu/4)+1;return !!CT[n]&&lvOpen(n)&&(n<(S.start||1)||[0,1,2].every(i=>S.done[gu*3+i]!=null))};
+const ltOpen=n=>!!CT[n]&&lvOpen(n)&&(n<(S.start||1)||[0,1,2,3].every(i=>S.ut[(n-1)*4+i]>=75));
+function curLevel(){let n=Math.max(1,S.start||1);while(n<20&&S.lt[n]>=75)n++;return n}
+/* ---------- Router ---------- */
+let V='home',A=0,P=0;
+function go(v,a){V=v;A=a||0;P=0;scrollTo(0,0);draw()}
+let SQ='',TD='Lessons';
+function tgl(){S.set.theme=document.documentElement.hasAttribute('data-d')?'light':'dark';save();theme();draw()}
+function draw(){
+ if(!USER){$('#nav').innerHTML='';$('#app').innerHTML=vAuth();return}
+ if(!S.placed)V='test';
+ const tabs=[['home','🏠','Home'],['learn','📚','Learn'],['review','🗂️','Review'],['progress','📊','Progress'],['settings','⚙️','Settings']];
+ $('#nav').innerHTML=tabs.map(t=>`<button class="${V==t[0]||(V=='lesson'&&t[0]=='learn')?'on':''}" onclick="go('${t[0]}')"><span>${t[1]}</span>${t[2]}</button>`).join('');
+ const top=`<div class=top><div class=logo><i></i><i></i><i></i><i></i></div><b>English First</b><input id=sq value="${SQ.replace(/"/g,'')}" placeholder="Search lessons and words" aria-label=Search onkeydown="if(event.key=='Enter'){SQ=this.value;go('search')}"><button class=ib aria-label="Due words" onclick="go('review')">🔔</button><div class=av>${(S.set.name||USER||'?')[0].toUpperCase()}</div><button class=ib aria-label="Switch theme" onclick="tgl()">🌓</button></div>`;
+ $('#app').innerHTML=top+({home:vHome,learn:vLearn,lesson:vLesson,review:vReview,progress:vProgress,settings:vSet,test:vTest,cert:vCert,search:vSearch})[V]();
+}
+
+function sk(k,c){const t=S.sk[k]||[0,0],p=t[1]?Math.round(t[0]/t[1]*100):0,a=Math.min(100,t[1]);return`<div class="sk ${c}"><div class=st>${k}</div><div class=sb><span>Questions answered<br><big>${t[1]}</big></span><div class=ring style="--p:${a}"><i>${a}%</i></div></div><div class=sb><span>Correct answers<br><big>${t[0]}</big> / ${t[1]}</span><div class=ring style="--p:${p}"><i>${p}%</i></div></div><div class=fl><b style="min-width:${Math.max(p,16)}%">${p}%</b></div></div>`}
+function cal(){const d=new Date(),y=d.getFullYear(),m=d.getMonth(),f=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate();let c=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=>`<i class=dh>${x}</i>`).join('');for(let i=0;i<f;i++)c+='<i></i>';for(let k=1;k<=n;k++){const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(k).padStart(2,'0');c+=`<i class="${S.days[ds]?'st':''} ${k==d.getDate()?'td':''}">${k}</i>`}return`<div class=card><h2>Planned events</h2><p class=mut>${d.toLocaleString('en',{month:'long',year:'numeric'})} · green days are days you studied</p><div class=cal>${c}</div></div>`}
+
+function todo(){const cl=curLevel();let r='';const tr=(pc,t,s,a,l)=>`<div class=tr><div class=pc>${pc}</div><div class=mid><b>${t}</b><br><small>${s}</small></div><button class=go onclick="${a}">▶<br>${l||'Start'}</button></div>`;
+ if(TD=='Lessons'){if(CT[cl])LS.filter(l=>l.lv==cl&&S.done[l.id]==null).slice(0,3).forEach(l=>r+=tr('0%',l.t,`Level ${cl} · Unit ${l.ui+1} · Lesson ${l.n}`,`go('lesson',${l.id})`));if(!r)r='<p class=mut>'+(CT[cl]?'All lessons of this level are finished. Take the tests.':'Lessons for Level '+cl+' are being written.')+'</p>'}
+ else if(TD=='Review'){const d=dueN();r=tr(d,'Words due for review',d?'Spaced repetition':'Nothing due now',"go('review')")}
+ else{if(CT[cl]){for(let ui=0;ui<4;ui++){const gu=(cl-1)*4+ui;if(utOpen(gu)&&!(S.ut[gu]>=75))r+=tr(S.ut[gu]!=null?S.ut[gu]+'%':'0%','Unit '+(ui+1)+' test','15 questions',`startUT(${gu})`)}if(ltOpen(cl)&&!(S.lt[cl]>=75))r+=tr('0%','Level '+cl+' test','30 questions',`startLT(${cl})`)}r+=tr(S.test?'L'+S.test.lvl:'—','Placement test','Find your exact level',"go('test')",'Retake')}
+ return`<div class=card><h2>To do list</h2><div class=tabsl>${['Lessons','Review','Tests'].map(t=>`<button class="${TD==t?'on':''}" onclick="TD='${t}';draw()">${t}</button>`).join('')}</div>${r}</div>`}
+function vHome(){const cl=curLevel(),nm=S.set.name?', '+S.set.name:'',rv=Math.max(...Object.keys(CT).filter(k=>+k<=cl).map(Number));
+ return`<h1>HOME</h1><p class=mut>Welcome${nm}. Your level: <b>Level ${cl} · ${LV[cl-1]}</b> · ${doneN()} of ${LS.length} ready lessons finished.</p>
+ ${CT[cl]?'':`<div class=card><b>Lessons for Level ${cl} are still being written.</b><p class=mut>Your level is saved and open. Until the lessons arrive you can review Level ${rv}.</p><button class=btn2 onclick="OL=${rv};go('learn')">Open Level ${rv}</button></div>`}
+ <div class=sks>${sk('Vocabulary','')}${sk('Listening','c2')}${sk('Grammar','c3')}${sk('Writing','c4')}</div><div class=two>${todo()}${cal()}</div>`}
+/* ---------- Learn map ---------- */
+function lvBody(n){let h='';const ct=CT[n];
+ for(let ui=0;ui<4;ui++){const gu=(n-1)*4+ui;h+=`<h3>Unit ${ui+1} · ${ct?ct[ui][0]:(TH[n-1]||[])[ui]||''}</h3>`;if(!ct){h+='<p class=mut>Lessons are being written.</p>';continue}
+  [0,1,2].forEach(li=>{const l=LM[gu*3+li],op=lessonOpen(l),dn=S.done[l.id]!=null;h+=`<button class="row ${op?'':'lock'}" ${op?'':'disabled'} onclick="go('lesson',${l.id})"><span>${dn?'✔':op?'○':'🔒'} Lesson ${li+1} · ${l.t}</span><b>${dn?S.done[l.id]+'%':''}</b></button>`});
+  const ok=utOpen(gu);h+=`<button class="row ${ok?'':'lock'}" ${ok?'':'disabled'} onclick="startUT(${gu})"><span>${S.ut[gu]>=75?'✔':ok?'📝':'🔒'} Unit ${ui+1} test · 15 questions</span><b>${S.ut[gu]!=null?S.ut[gu]+'%':''}</b></button>`}
+ if(ct){const ok=ltOpen(n);h+=`<button class="row ${ok?'':'lock'}" ${ok?'':'disabled'} onclick="startLT(${n})"><span>${S.lt[n]>=75?'✔':ok?'🏁':'🔒'} Level ${n} test · 30 questions</span><b>${S.lt[n]!=null?S.lt[n]+'%':''}</b></button>`}
+ return h}
+function vLearn(){OL=OL||curLevel();let h='<h1>LEARN</h1><p class=mut>20 levels · 4 units each · 3 lessons each. Tap a level to open it.</p>';
+ LV.forEach((nm,i)=>{const n=i+1,op=lvOpen(n),ct=!!CT[n],pc=ct?Math.round(LS.filter(l=>l.lv==n&&S.done[l.id]!=null).length/12*100):0;
+  h+=`<div class="card ${op?'':'dim'}"><button class=row style="border:0;padding:0" ${op?'':'disabled'} onclick="OL=${OL==n?-1:n};draw()"><span><b>${op?'🔓':'🔒'} Level ${n} · ${nm}</b>${n==S.start?' · your level':''}${S.lt[n]>=75?' ✔':''}</span><b>${ct?pc+'%':'soon'}</b></button>${OL==n?lvBody(n):''}</div>`});return h}
+function vid(id,k){const v=((window.VIDEOS||{})[id]||[])[k]||{};return`<div class=vid>${v.yt?`<iframe src="https://www.youtube-nocookie.com/embed/${v.yt}?rel=0" title="${v.t||'Lesson video'}" allowfullscreen loading=lazy></iframe>`:v.src?`<video controls preload=none src="${v.src}"></video>`:`<span>Video ${k+1} for this lesson has not been added yet.</span>`}</div>${v.t?`<p class=mut>${v.t}</p>`:''}`}
+
+function vLesson(){const l=LM[A],fv=S.fav[l.id],parts=['Part 1 · Words','Part 2 · Sentence','Part 3 · Practice'];
+ const body=P==0?`${vid(l.id,0)}<div class=card><h2>Vocabulary</h2>${l.w.map(w=>`<div class=w><b>${w.en}</b>${S.set.tr?`<span class=ar>${w.ar}</span>`:''}<button class=btn2 aria-label="Listen to ${w.en}" onclick="say('${w.en}')">▶</button></div>`).join('')}</div>`
+ :P==1?`${vid(l.id,1)}<div class=card><h2>Sentence</h2><p style="font-size:19px">${l.s}.</p><button class=btn2 onclick="say('${l.s}')">▶ Listen</button></div>`
+ :`${vid(l.id,2)}<div class=card><h2>Ready?</h2><p>Pass the quiz with 75% or more.</p><button class=btn onclick="startLesson(${l.id})">Start quiz</button> <button class=btn2 onclick="S.fav[${l.id}]=${fv?0:1};save();draw()">${fv?'★ Saved':'☆ Save lesson'}</button></div>`;
+ return`<button class=btn2 onclick="OL=${l.lv};go('learn')">← Back to Level ${l.lv}</button><h1>${l.t}</h1><p class=mut>Level ${l.lv} · Unit ${l.ui+1} · ${l.ut} · Lesson ${l.n}</p><div class=tabs>${parts.map((t,i)=>`<button class="${P==i?'btn':'btn2'}" onclick="P=${i};draw()">${t}</button>`).join('')}</div>${body}`}
+/* ---------- Quiz engine ---------- */
+let Q=null;
+const others=(k,v,n)=>sh(POOL.filter(w=>w[k]!=v)).slice(0,n).map(w=>w[k]);
+const mc=w=>({q:`What does “${w.en}” mean?`,k:'Vocabulary',say:w.en,o:sh([w.ar,...others('ar',w.ar,3)]),a:w.ar,ar:1,w});
+const tw=w=>({q:`Write the English word for “${w.ar}”.`,k:'Writing',type:1,a:w.en,w});
+const dict=w=>({q:'Listen and type what you hear.',k:'Writing',say:w.en,type:1,a:w.en,w});
+const ls=w=>({q:'Listen and choose the word.',k:'Listening',say:w.en,o:sh([w.en,...others('en',w.en,3)]),a:w.en,w});
+
+function runQuiz(qs,title,fin){Q={qs,i:0,s:0,title,fin,lock:0,pick:[]};showQ()}
+function showQ(){const q=Q.qs[Q.i];Q.lock=0;Q.pick=[];
+ let h=`<p class=mut>${Q.title} · ${Q.i+1} of ${Q.ad?Q.ad.n:Q.qs.length}</p><div class=bar><i style="width:${Q.i/(Q.ad?Q.ad.n:Q.qs.length)*100}%"></i></div><h2>${q.q}</h2>${q.p?`<div class=card>${q.p}</div>`:''}`;
+ if(q.say)h+=`<button class=btn2 onclick="say(Q.qs[Q.i].say)">▶ Listen</button>`;
+ if(q.ord)h+=`<div class=line id=ln></div><div id=bank></div><button class=btn id=chk onclick="chkOrd()" disabled>Check</button>`;
+ else if(q.type)h+=`<input id=ti autocomplete=off autocapitalize=none placeholder="Type your answer" style="width:100%"><br><button class=btn style="margin-top:10px" onclick="chkType()">Check</button>`;else h+=q.o.map((o,j)=>`<button class=opt ${q.ar?'dir=rtl':''} onclick="pick(${j})">${o}</button>`).join('');
+ $('#app').innerHTML=h+'<div id=fb></div>';if(q.ord)ordDraw()}
+function ordDraw(){const q=Q.qs[Q.i];$('#ln').innerHTML=Q.pick.map((t,k)=>`<button class=chip onclick="Q.pick.splice(${k},1);ordDraw()">${q.ord[t]}</button>`).join('');
+ $('#bank').innerHTML=q.ord.map((t,k)=>Q.pick.includes(k)?'':`<button class=chip onclick="ordAdd(${k})">${t}</button>`).join('');$('#chk').disabled=Q.pick.length!=q.ord.length}
+function ordAdd(k){Q.pick.push(k);ordDraw()}
+function chkType(){if(Q.lock)return;Q.lock=1;const q=Q.qs[Q.i],n=s=>s.toLowerCase().replace(/[^a-z0-9 ]/g,'').trim();fin1(n($('#ti').value)==n(q.a),q)}
+function chkOrd(){if(Q.lock)return;Q.lock=1;const q=Q.qs[Q.i],ans=Q.pick.map(k=>q.ord[k]).join(' ');fin1(ans==q.a,q)}
+/* note: order picks are stored as indexes into the shuffled bank, so they stay unique */
+function pick(j){if(Q.lock)return;Q.lock=1;const q=Q.qs[Q.i];document.querySelectorAll('.opt').forEach((b,k)=>{if(q.o[k]==q.a)b.classList.add('ok');else if(k==j)b.classList.add('no')});fin1(q.o[j]==q.a,q)}
+function fin1(ok,q){Q.last=ok;const k=q.k||'Other',t=S.sk[k]=S.sk[k]||[0,0];t[1]++;if(ok)t[0]++;if(ok)Q.s++;else if(q.w){const w=q.w;S.mist=[w,...S.mist.filter(m=>m.en!=w.en)].slice(0,50);if(S.vocab[w.en]){S.vocab[w.en].box=0;S.vocab[w.en].due=Date.now()}save()}
+ $('#fb').innerHTML=`<p style="color:var(--${ok?'ok':'bad'})"><b>${ok?'Correct!':'Not quite.'}</b> ${ok?'':'Answer: '+q.a}</p><button class=btn onclick="nextQ()">${Q.i+1==Q.qs.length?'Finish':'Next'}</button>`}
+const ST=[5,4,4,3,3,2,2,2,1,1,1,1,1,1];
+function nextQ(){if(Q.ad)Q.ad.r.push([Q.ad.h[Q.i],Q.last]);if(Q.ad&&Q.i+1<Q.ad.n){const a=Q.ad,st=ST[a.h.length-1]||1;a.lv=Math.max(1,Math.min(20,a.lv+(Q.last?st:-st)));Q.qs.push(pickQ(a))}
+ Q.i++;if(Q.i>=Q.qs.length){const p=Math.round(Q.s/Q.qs.length*100);$('#app').innerHTML=Q.fin(p)}else showQ()}
+
+const ordQ=s=>({q:'Put the words in order.',k:'Sentences',ord:sh(s.split(' ')),a:s});
+const wrap=(msg,ok,nx)=>`<p>${ok?'Passed! ':'You need 75% to pass. '}${msg}</p>${nx}`;
+const pbQ=c=>c[2]?{q:c[1],k:c[4]?'Reading':'Grammar',p:c[4],o:sh(c[2].split('|')),a:c[3]}:{q:c[1],k:'Writing',type:1,a:c[3]};
+function startLesson(id){const l=LM[id];POOL=lvWords(l.lv);
+ runQuiz([...sh(l.w).map(mc),ls(l.w[0]),ls(l.w[1]),tw(l.w[2]),ordQ(l.s)],l.t,pct=>{const ok=pct>=75;if(ok){S.done[id]=Math.max(S.done[id]||0,pct);S.days[today()]=(S.days[today()]||0)+1;l.w.forEach(w=>{if(!S.vocab[w.en])S.vocab[w.en]={ar:w.ar,box:0,due:Date.now()}});save()}
+  return`<h1>${pct}%</h1><p>${ok?'Passed! The words were added to your Review list.':'You need 75% to pass. Review the lesson and try again.'}</p>${ok&&l.n<3?`<button class=btn onclick="go('lesson',${id+1})">Next lesson</button> `:''}${ok&&l.n==3?`<button class=btn onclick="startUT(${l.gu})">Take Unit test</button> `:''}<button class=btn2 onclick="go('lesson',${id})">Back to lesson</button> <button class=btn2 onclick="OL=${l.lv};go('learn')">Learning map</button>`})}
+function startUT(gu){const n=Math.floor(gu/4)+1;POOL=lvWords(n);const lz=LS.filter(l=>l.gu==gu),ws=sh(lz.flatMap(l=>l.w));
+ runQuiz(sh([...ws.slice(0,5).map(mc),...ws.slice(5,7).map(ls),...ws.slice(7,9).map(tw),...ws.slice(9,11).map(dict),mc(ws[11]),...lz.map(l=>ordQ(l.s))]),'Unit '+(gu%4+1)+' test',pct=>{const ok=pct>=75;S.ut[gu]=Math.max(S.ut[gu]||0,pct);if(ok)S.days[today()]=(S.days[today()]||0)+1;save();
+  return`<h1>${pct}%</h1>`+wrap(ok?(gu%4<3?'The next unit is open.':'The level test is open.'):'Review this unit and try again.',ok,`<button class=btn onclick="OL=${n};go('learn')">Learning map</button>`)})}
+function startLT(n){POOL=lvWords(n);const ws=sh(POOL),pb=[...PB].sort((a,b)=>Math.abs(a[0]-n)-Math.abs(b[0]-n)||Math.random()-.5).slice(0,6).map(pbQ);
+ runQuiz(sh([...ws.slice(0,8).map(mc),...ws.slice(8,12).map(ls),...ws.slice(12,16).map(tw),...ws.slice(16,20).map(dict),...pb,...sh(LS.filter(l=>l.lv==n)).slice(0,4).map(l=>ordQ(l.s))]),'Level '+n+' test',pct=>{const ok=pct>=75;S.lt[n]=Math.max(S.lt[n]||0,pct);save();
+  return`<h1>${pct}%</h1>`+wrap(ok?'You finished Level '+n+'.'+(n<20?' Level '+(n+1)+' is open.':''):'Review the units that felt hard and try again.',ok,ok?`<button class=btn onclick="go('cert',${n})">Get certificate</button>`:`<button class=btn onclick="OL=${n};go('learn')">Learning map</button>`)})}
+function pickQ(a){const free=PB.filter(x=>!a.u[x[1]]),d=Math.min(...free.map(x=>Math.abs(x[0]-a.lv))),c=sh(free.filter(x=>Math.abs(x[0]-a.lv)==d))[0];a.u[c[1]]=1;a.h.push(c[0]);
+ return c[2]?{q:c[1],k:c[4]?'Reading':'Grammar',p:c[4],o:sh(c[2].split('|')),a:c[3]}:{q:c[1],k:'Writing',type:1,a:c[3]}}
+function vTest(){const t=S.test;return`<h1>PLACEMENT TEST</h1>${S.placed?'':'<p>Welcome'+(S.set.name?', '+S.set.name:'')+'! Take this test first so we can find your exact level.</p>'}<div class=card><p>14 adaptive questions across 20 levels. Every correct answer makes the next question harder. Every wrong answer makes it easier. At the end you get your level. It is an estimate, not an official exam, and it does not test speaking.</p>
+${t?`<p class=mut>Last result: Level ${t.lvl||'?'} on ${t.date}</p>`:''}<button class=btn onclick="startTest()">Start Test</button></div>`}
+function startTest(){const a={lv:10,h:[],u:{},r:[],n:14};const first=pickQ(a);
+ runQuiz([first],'Placement',pct=>{const l=a.h.slice(-4).concat([a.lv]),hc=Math.max(0,...a.r.filter(x=>x[1]).map(x=>x[0])),lw=Math.min(21,...a.r.filter(x=>!x[1]).map(x=>x[0]));let lvl=Math.round(l.reduce((x,y)=>x+y,0)/l.length);lvl=Math.max(1,Math.min(20,Math.min(Math.max(lvl,hc-1),lw+1)));S.test={pct,lvl,date:today()};S.start=lvl;S.placed=1;save();
+  return`<h1>Level ${lvl}</h1><p>You are in <b>Level ${lvl} · ${LV[lvl-1]}</b>. Levels 1 to ${lvl} are now open.</p><p class=mut>${CT[lvl]?'Your lessons are ready.':'Lessons for this level are still being written. Levels 1 to 3 are ready now, so you can review them.'}</p><button class=btn onclick="go('home')">Go to Home</button> <button class=btn2 onclick="go('learn')">Open learning map</button>`});Q.ad=a;showQ()}
+
+function vSearch(){const q=SQ.toLowerCase().trim(),r=LS.filter(l=>l.t.toLowerCase().includes(q)||l.w.some(w=>w.en.toLowerCase().includes(q)||w.ar.includes(q)));
+ return`<h1>SEARCH</h1><p class=mut>${r.length} result${r.length==1?'':'s'} for “${SQ.replace(/</g,'')}”</p><div class=card>${r.map(l=>`<button class=row onclick="go('lesson',${l.id})"><span>${l.t}</span><b>L${l.lv} · U${l.ui+1}</b></button>`).join('')||'<p>No lessons found.</p>'}</div>`}
+/* ---------- Review (spaced repetition) ---------- */
+let R=null;
+function vReview(){const due=Object.entries(S.vocab).filter(x=>x[1].due<=Date.now());
+ if(!Object.keys(S.vocab).length)return'<h1>Review</h1><div class=card><p>Your notebook is empty. Finish a lesson and its words will appear here.</p></div>';
+ if(!due.length)return`<h1>Review</h1><div class=card><p>Nothing is due now. ${Object.keys(S.vocab).length} words are in your notebook.</p></div>${notebook()}`;
+ const [en,v]=due[0];return`<h1>Review</h1><p class=mut>${due.length} due</p><div class=card style="text-align:center"><h2>${en}</h2><button class=btn2 onclick="say('${en}')">▶ Listen</button>
+ <p class=ar id=ans style="visibility:hidden">${v.ar}</p><button class=btn2 onclick="$('#ans').style.visibility='visible'">Show meaning</button>
+ <p>Did you remember it?</p><button class=btn onclick="rate('${en}',1)">Yes</button> <button class=btn2 onclick="rate('${en}',0)">No</button></div>`}
+function notebook(){return'<div class=card><h2>Notebook</h2>'+Object.entries(S.vocab).map(([e,v])=>`<div class=w><b>${e}</b><span class=ar>${v.ar}</span><span class=mut>Box ${v.box+1}/6</span></div>`).join('')+'</div>'}
+function rate(en,ok){const v=S.vocab[en],gap=[0,1,2,4,8,16];v.box=ok?Math.min(5,v.box+1):0;v.due=Date.now()+(ok?gap[v.box]*864e5:6e5);save();draw()}
+
+function vProgress(){const b=[['First Lesson',doneN()>=1],['Vocabulary Builder',Object.keys(S.vocab).length>=25],['Unit Champion',Object.values(S.ut).some(v=>v>=75)],['Level Graduate',Object.values(S.lt).some(v=>v>=75)]];
+ return`<h1>PROGRESS</h1><div class=grid><div class=stat><b>${doneN()}/${LS.length}</b>Lessons</div><div class=stat><b>${avg()}%</b>Average score</div><div class=stat><b>${Object.keys(S.vocab).length}</b>Words learned</div><div class=stat><b>${Object.keys(S.days).length}</b>Days studied</div></div>
+ <div class=card><h2>Skills</h2>${Object.keys(S.sk).map(k=>{const t=S.sk[k],q=t[1]?Math.round(t[0]/t[1]*100):0;return`<div class=w><b>${k}</b><span>${q}%</span></div><div class=bar><i style="width:${q}%"></i></div>`}).join('')||'<p class=mut>Answer some questions to see your skills.</p>'}</div>
+ <div class=card><h2>Achievements</h2>${b.map(x=>`<p>${x[1]?'🏅':'🔒'} ${x[0]}</p>`).join('')}</div>
+ <div class=card><h2>Lesson scores</h2>${LS.filter(l=>S.done[l.id]!=null).map(l=>`<div class=w><b>L${l.lv} · ${l.t}</b><span>${S.done[l.id]}%</span></div>`).join('')||'<p class=mut>No lessons finished yet.</p>'}</div>
+ <div class=card><h2>Mistakes</h2>${S.mist.length?S.mist.slice(0,10).map(m=>`<div class=w><b>${m.en}</b><span class=ar>${m.ar}</span></div>`).join('')+'<button class=btn onclick="pract()">Practise mistakes</button>':'<p class=mut>No mistakes yet.</p>'}</div>`}
+function pract(){POOL=ALL;runQuiz(S.mist.slice(0,8).map(mc),'Mistakes',p=>`<h1>${p}%</h1><button class=btn onclick="go('progress')">Back</button>`)}
+function vCert(){const n=A,dn=Object.keys(S.lt).filter(k=>S.lt[k]>=75);
+ if(!n||!(S.lt[n]>=75))return'<h1>CERTIFICATES</h1>'+(dn.length?dn.map(k=>`<div class=card><b>Level ${k} · ${LV[k-1]}</b><br><button class=btn onclick="go('cert',${k})">View certificate</button></div>`).join(''):'<div class=card><p>Finish a level to earn its certificate: 12 lessons, 4 unit tests and the level test, each with 75% or more.</p></div>');
+ const id='EF-L'+n+'-'+(S.cid[n]=S.cid[n]||Math.random().toString(36).slice(2,8).toUpperCase());save();
+ return`<div class=cert><h2>English First</h2><p>Certificate of Completion</p><h1>${S.set.name||'Learner'}</h1><p>has completed Level ${n} · ${LV[n-1]}<br>Level test score ${S.lt[n]}% · ${today()}</p><p class=mut>${id}<br>Issued by the platform. Not an official or externally accredited certificate.</p></div><p class=noprint><button class=btn onclick="print()">Print or save as PDF</button></p>`}
+function vSet(){const s=S.set;return`<h1>Settings</h1><div class=card>
+ <div class=set>Display name<input value="${s.name}" maxlength=30 onchange="S.set.name=this.value;save()"></div>
+ <div class=set>Appearance<select onchange="S.set.theme=this.value;save();theme()">${['system','light','dark'].map(x=>`<option ${s.theme==x?'selected':''}>${x}</option>`).join('')}</select></div>
+ <div class=set>Accent<select onchange="S.set.acc=this.value;save()"><option value="en-US" ${s.acc=='en-US'?'selected':''}>American</option><option value="en-GB" ${s.acc=='en-GB'?'selected':''}>British</option></select></div>
+ <div class=set>Speech speed<select onchange="S.set.rate=+this.value;save()">${[['.6','Slow'],['.9','Normal'],['1.15','Fast']].map(x=>`<option value="${x[0]}" ${+x[0]==s.rate?'selected':''}>${x[1]}</option>`).join('')}</select></div>
+ <div class=set>Arabic translations<input type=checkbox ${s.tr?'checked':''} onchange="S.set.tr=this.checked;save()"></div>
+ <p class=mut>Pronunciation uses your browser's voices, which differ by device. Progress is stored only on this device unless you export it.</p>
+ <button class=btn2 onclick="localStorage.removeItem('ef_cur');location.reload()">Log out</button> <button class=btn2 onclick="exp()">Export data</button> <label class=btn2 style="display:inline-block">Import data<input type=file accept=.json hidden onchange="imp(this.files[0])"></label> <button class=btn2 onclick="if(confirm('Delete all learning data on this device?')){localStorage.removeItem(KEY());location.reload()}">Delete data</button></div>`}
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='english-first-backup.json';a.click()}
+function imp(f){if(!f)return;f.text().then(t=>{try{Object.assign(S,JSON.parse(t));save();theme();go('home')}catch(e){alert('This file could not be read.')}})}
+
+theme();draw();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));
+</script></body></html>
