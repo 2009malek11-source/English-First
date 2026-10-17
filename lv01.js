@@ -1,4 +1,4 @@
-/* Level 1 (A1). Lesson = {t:title, v:"word|arabic;...(5)", r:reading passage, q:[[question,right,wrong,wrong,wrong]x3], l:[listening sentences with [right|wrong|wrong]]} */
+/* Level 1 (A1). Lesson = {t:title, v:"word|arabic;...(5)|", r:reading passage, q:[[question,right,wrong,wrong,wrong]x3], l:[listening sentences with [right|wrong|wrong]]} */
 window.CONTENT=window.CONTENT||{};
 CONTENT[1]=[
 ["Greetings and Names",[

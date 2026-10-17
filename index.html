@@ -1,9 +1,11 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="description" content="English First: a free English course with 20 levels, reading, writing, listening, speaking and grammar. Learn from A1 to C1.">
 <meta property="og:title" content="English First"><meta property="og:description" content="A free English course from beginner to advanced, with grammar, listening, speaking and a placement test."><meta property="og:type" content="website"><meta property="og:image" content="logo.png"><meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#0b4696"><link rel="icon" href="favicon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="English First"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#0b4696"><link rel="icon" href="favicon.png"><link rel="manifest" href="manifest.json"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="English First"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon.png"><link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
 <title>English First</title>
 <style>
 :root{--bg:#f3f8fa;--card:#fff;--ink:#1c1b4b;--mut:#6b7486;--ac:#0b4696;--ac2:#f2b822;--line:#e3ebf0;--ok:#0f9d6b;--bad:#d1483f;--ci:#3b27d8;--cb:#ebe8fb;--cm:#d9d4f6}
@@ -55,7 +57,18 @@ input,select{font:inherit;padding:10px;border-radius:10px;border:1px solid var(-
 .set{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .cert{text-align:center;border:6px double var(--ac2);padding:28px;background:var(--card)}
 .vid{aspect-ratio:16/9;background:#0b1a20;border-radius:18px;overflow:hidden;display:grid;place-items:center;color:#9fb4bb;text-align:center;padding:12px}.vid iframe,.vid video{width:100%;height:100%;border:0}
-.tabs{display:flex;gap:8px;margin:10px 0}.tabs button{flex:1;padding:8px 4px}.auth{max-width:380px;margin:8vh auto}.auth input{width:100%;margin:6px 0}
+.tabs{display:flex;gap:8px;margin:10px 0}.tabs button{flex:1;padding:8px 4px}
+.ic{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.3,1.6,.5,1);display:block;margin:0 auto}.ic .f{fill:var(--ac2);stroke:none}.ic .g{fill:currentColor;stroke:none}
+nav button:hover .ic,.ib:hover .ic{transform:translateY(-2px) scale(1.08)}nav button:active .ic,.ib:active .ic,#fab:active .ic{transform:scale(.82)}
+nav button.on .ic{color:var(--ac);transform:translateY(-2px)}nav button.on .ic .f{fill:var(--ac2)}
+.ic-gear{transition:transform .8s cubic-bezier(.3,1.4,.5,1)}nav button:hover .ic-gear,nav button:active .ic-gear,nav button.on .ic-gear{transform:rotate(120deg)}
+.ib .ic{width:22px;height:22px}#fab .ic{width:28px;height:28px;color:#fff}
+.calm .ic,.calm .ic-gear{transition:none}
+#zm{position:fixed;inset:0;z-index:300;background:#000d;display:flex;flex-direction:column;padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom))}#zm p{color:#fff;margin:6px 0;text-align:center;font-size:14px}.zs{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;background:#fff;border-radius:12px}.zs img{width:260%;max-width:none;display:block}
+.pimg{width:100%;border-radius:12px;border:1px solid var(--line);cursor:zoom-in;display:block;margin:8px 0}.hb .pimg{max-width:260px}
+.stp{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.stp b.n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center}.qr{width:min(260px,70vw);height:auto;border-radius:16px;border:6px solid #fff;box-shadow:0 4px 18px #0002;display:block;margin:10px auto}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.auth{max-width:380px;margin:8vh auto}.auth input{width:100%;margin:6px 0;-webkit-appearance:none;appearance:none;-webkit-user-select:text;user-select:text;touch-action:manipulation;min-height:44px}.auth form{margin:0}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ac2);outline-offset:2px}
 .msg{min-height:1.4em;font-size:14px}.msg.bad{color:var(--bad)}.msg.ok{color:var(--ok)}.oauth{width:100%;margin:6px 0}.sep{text-align:center;color:var(--mut);font-size:13px;margin:10px 0}.calm *{animation:none!important;transition:none!important}.lnk{background:none;border:0;color:var(--ac);cursor:pointer;font:inherit;padding:6px 0;text-decoration:underline}
 
@@ -77,7 +90,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </style></head><body>
 <div class="app" id="app"></div>
 <nav id="nav"></nav>
-<button id=fab aria-label="Ask the helper" onclick="hOpen()">💬</button>
+<button id=fab aria-label="Ask the helper" onclick="hOpen()"></button>
 <div id=hp hidden role=dialog aria-label="Helper"><div id=hl></div><form onsubmit="hSend();return false"><input id=hi placeholder="Ask me anything about the app…" autocomplete=off><button class=btn>Send</button></form></div>
 <div id=splash role=img aria-label="English First"><img src="logo.png" alt="English First"></div>
 <script src="supabase-config.js"></script>
@@ -93,7 +106,18 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <script src="lv08.js"></script>
 <script src="lv09.js"></script>
 <script src="lv10.js"></script>
+<script src="lv11.js"></script>
+<script src="lv12.js"></script>
+<script src="lv13.js"></script>
+<script src="lv14.js"></script>
+<script src="lv15.js"></script>
+<script src="lv16.js"></script>
+<script src="lv17.js"></script>
+<script src="lv18.js"></script>
+<script src="lv19.js"></script>
+<script src="lv20.js"></script>
 <script src="grammar.js"></script>
+<script src="grammar2.js"></script>
 <script src="videos.js"></script>
 <script>
 
@@ -103,7 +127,7 @@ const TH=window.THEMES||[],CT=window.CONTENT||{};
 const PB=[[1,'I ___ a student.','am|is|are|be','am'],[1,'Which word is a number?','three|house|blue|water','three'],[2,'She ___ coffee every morning.','drinks|drink|drinking|drank','drinks'],[2,'There ___ three books on the table.','are|is|am|be','are'],[3,'What time ___ you get up?','do|does|are|is','do'],[3,'This is ___ apple.','an|a|the|some','an'],[4,'Yesterday we ___ to the market.','went|go|goes|going','went'],[4,'My sister is ___ than me.','taller|tall|tallest|more tall','taller'],[5,'I ___ TV when the phone rang.','was watching|watched|am watching|watch','was watching'],[5,'How ___ water do you drink a day?','much|many|few|any','much'],[6,'If it rains, we ___ at home.','will stay|stay|stayed|would stay','will stay'],[6,'I have lived here ___ 2019.','since|for|during|from','since'],[7,'She has ___ finished her homework.','already|yet|since|ago','already'],[7,'The book ___ by millions of people.','was read|read|reading|has read','was read'],[8,'I wish I ___ more time.','had|have|has|will have','had'],[8,'He is used to ___ early.','getting up|get up|got up|gets up','getting up'],[9,'Why did Omar stop buying lunch?','To save money|He disliked the food|He was ill|His school closed','To save money','Omar wanted to save money, so he stopped buying lunch at school and brought food from home. After six months he had enough to buy a bicycle.'],[9,'By the time we arrived, the film ___.','had started|started|has started|was starting','had started'],[10,'Neither of the answers ___ correct.','is|are|were|be','is'],[10,'Write the past participle of “write”.','','written'],[11,'She suggested ___ a taxi.','taking|to take|take|took','taking'],[11,'Hardly ___ the door when the phone rang.','had he opened|he opened|did he open|he had opened','had he opened'],[12,'The meeting was cancelled ___ the manager’s illness.','owing to|despite|unless|whereas','owing to'],[12,'Choose the closest meaning of “reluctant”.','unwilling|eager|careful|tired','unwilling'],[13,'What do critics say about the policy?','It shifted the problem elsewhere|It removed traffic completely|It was never applied|It shortened commutes','It shifted the problem elsewhere','Although the new policy was meant to reduce traffic, critics argue that it merely moved congestion to neighbouring districts, where residents now face longer commutes.'],[13,'Had I known, I ___ differently.','would have acted|would act|had acted|acted','would have acted'],[14,'Choose the synonym of “meticulous”.','careful|careless|quick|rude','careful'],[14,'Not only ___ late, but he also forgot the files.','was he|he was|is he|he is','was he'],[15,'The evidence is ___; no one can deny it.','irrefutable|ambiguous|trivial|dubious','irrefutable'],[15,'She is said ___ in three languages.','to be fluent|being fluent|that fluent|be fluent','to be fluent'],[16,'His speech was full of ___: it said a lot but meant little.','platitudes|insights|statistics|anecdotes','platitudes'],[16,'By next year she ___ here for a decade.','will have worked|will work|has worked|works','will have worked'],[17,'What is the author’s real attitude?','Critical|Admiring|Neutral|Confused','Critical','The author’s irony is subtle: while ostensibly praising the committee’s diligence, each compliment exposes another failure of its judgement.'],[17,'Write the noun form of “persuade”.','','persuasion'],[18,'Were it not for his support, the project ___.','would have collapsed|collapsed|will collapse|has collapsed','would have collapsed'],[18,'Choose the closest meaning of “ephemeral”.','short-lived|ancient|valuable|hidden','short-lived'],[19,'The politician’s answer was deliberately ___, avoiding any firm commitment.','equivocal|candid|emphatic|forthright','equivocal'],[19,'Seldom ___ such dedication.','does one see|one sees|one does see|sees one','does one see'],[20,'The theory, though elegant, remains ___ by empirical evidence.','unsubstantiated|corroborated|exemplified|verified','unsubstantiated'],[20,'Write the adjective formed from “ubiquity”.','','ubiquitous']];
 const G=[['He ___ to school every day.',['go','goes','going','gone'],'goes'],['She ___ a teacher.',['am','are','is','be'],'is'],['They ___ reading now.',['is','am','are','be'],'are'],['I ___ not understand.',['do','does','is','am'],'do'],['There ___ two books on the table.',['is','are','am','be'],'are'],['Yesterday I ___ to the market.',['go','goes','went','going'],'went']];
 
-const MAXW={1:9,2:9,3:9,4:10,5:12,6:13,7:15,8:17,9:18,10:20};
+const MAXW={1:9,2:9,3:9,4:10,5:12,6:13,7:15,8:17,9:18,10:20};for(let i=11;i<=20;i++)MAXW[i]=20;
 const wc=s=>s.split(/\s+/).filter(Boolean).length;
 const sents=t=>(t.match(/[^.!?]+[.!?]+/g)||[]).map(s=>s.trim());
 const parseL=s=>{const m=s.match(/\[([^\]]+)\]/),o=m[1].split('|');return{a:s.replace(m[0],o[0]),o:o.map(x=>s.replace(m[0],x))}};
@@ -209,14 +233,14 @@ async function oauth(p){if(location.protocol=='file:')return msg('Social sign-in
 async function newPass(){const pw=(($('#ap')||{}).value)||'';if(pw.length<8)return msg('Password must have at least 8 characters.');
  try{const r=await sb.auth.updateUser({password:pw});if(r.error)throw r.error;REC=0;AMSG='';if(SESS)await onSignedIn(SESS);else draw()}catch(e){msg(friendly(e))}}
 function vCloudAuth(){
- if(REC)return`<div class="card auth"><h1>New password</h1><input id=ap type=password placeholder="New password (8+ characters)" autocomplete=new-password onkeydown="if(event.key=='Enter')newPass()"><p id=ae class="msg bad" role=status>${esc(AMSG)}</p><button class=btn onclick="newPass()">Save password</button></div>`;
+ if(REC)return`<div class="card auth"><h1>New password</h1><form onsubmit="newPass();return false"><input id=ap type=password aria-label="New password" placeholder="New password (8+ characters)" autocomplete=new-password enterkeyhint=go><button type=submit hidden></button></form><p id=ae class="msg bad" role=status>${esc(AMSG)}</p><button class=btn onclick="newPass()">Save password</button></div>`;
  const up=AM=='up',fg=AM=='forgot',Pv=CFG.providers||{},bt=(p,l)=>Pv[p]?`<button class="btn2 oauth" onclick="oauth('${p}')">Continue with ${l}</button>`:'';
  const soc=bt('google','Google')+bt('apple','Apple (iCloud)');
  return`<div class="card auth"><h1>English First</h1><p class=mut>${fg?'Reset your password':up?'Create your account':'Sign in to continue'}</p>
  ${location.protocol=='file:'?'<p class="msg bad">Cloud sign-in works only when the site is hosted on https.</p>':''}
- ${up?'<input id=an placeholder="Your name" maxlength=30 autocomplete=name>':''}
- <input id=au type=email placeholder=Email autocomplete=email autocapitalize=none onkeydown="if(event.key=='Enter')cauth()">
- ${fg?'':`<input id=ap type=password placeholder="Password (8+ characters)" autocomplete="${up?'new-password':'current-password'}" onkeydown="if(event.key=='Enter')cauth()">`}
+ <form onsubmit="cauth();return false" novalidate>${up?'<input id=an aria-label="Your name" placeholder="Your name" maxlength=30 autocomplete=name enterkeyhint=next>':''}
+ <input id=au type=email inputmode=email aria-label=Email placeholder=Email autocomplete=email autocapitalize=none autocorrect=off spellcheck=false enterkeyhint=next>
+ ${fg?'':`<input id=ap type=password aria-label=Password placeholder="Password (8+ characters)" autocomplete="${up?'new-password':'current-password'}" enterkeyhint=go>`}<button type=submit hidden></button></form>
  <p id=ae class="msg bad" role=status>${esc(AMSG)}</p>
  <button class=btn onclick="cauth()">${fg?'Send reset link':up?'Create account':'Sign in'}</button>
  ${fg?`<button class=btn2 onclick="AM='in';AMSG='';draw()">Back to sign in</button>`:`<button class=btn2 onclick="AM='${up?'in':'up'}';AMSG='';draw()">${up?'I have an account':'Create account'}</button>`}
@@ -224,7 +248,7 @@ function vCloudAuth(){
  ${soc&&!fg?`<div class=sep>or</div>${soc}`:''}
  <p class=mut>Your progress is saved to your account and follows you to every device.</p></div>`}
 async function hash(p,s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let x=5381;for(const c of s+p)x=(x*33^c.charCodeAt(0))>>>0;return'x'+x}}
-function vLocalAuth(){const up=AM=='up';return`<div class="card auth"><h1>English First</h1><p class=mut>${up?'Create your account':'Sign in to continue'}</p>${up?'<input id=an placeholder="Your name" maxlength=30>':''}<input id=au placeholder=Username maxlength=20 autocapitalize=none><input id=ap type=password placeholder="Password (6+ characters)"><p id=ae class="msg bad">${esc(AMSG)}</p><button class=btn onclick="localAuth()">${up?'Create account':'Sign in'}</button> <button class=btn2 onclick="AM='${up?'in':'up'}';AMSG='';draw()">${up?'I have an account':'Create account'}</button><p class=mut>Cloud sign-in is not set up, so accounts are stored on this device only. See SETUP-CLOUD.md to turn on email, Google and Apple sign-in.</p></div>`}
+function vLocalAuth(){const up=AM=='up';return`<div class="card auth"><h1>English First</h1><p class=mut>${up?'Create your account':'Sign in to continue'}</p><form onsubmit="localAuth();return false" novalidate>${up?'<input id=an aria-label="Your name" placeholder="Your name" maxlength=30 enterkeyhint=next>':''}<input id=au aria-label=Username placeholder=Username maxlength=20 autocapitalize=none autocorrect=off spellcheck=false autocomplete=username enterkeyhint=next><input id=ap type=password aria-label=Password placeholder="Password (6+ characters)" autocomplete=current-password enterkeyhint=go><button type=submit hidden></button></form><p id=ae class="msg bad">${esc(AMSG)}</p><button class=btn onclick="localAuth()">${up?'Create account':'Sign in'}</button> <button class=btn2 onclick="AM='${up?'in':'up'}';AMSG='';draw()">${up?'I have an account':'Create account'}</button><p class=mut>Cloud sign-in is not set up, so accounts are stored on this device only. See SETUP-CLOUD.md to turn on email, Google and Apple sign-in.</p></div>`}
 async function localAuth(){const u=$('#au').value.trim().toLowerCase(),p=$('#ap').value,L=ACC(),e=m=>msg(m),nm=AM=='up'?$('#an').value.trim():'';
  if(!/^[a-z0-9_]{3,20}$/.test(u))return e('Username: 3 to 20 letters, numbers or _');if(p.length<6)return e('Password must have at least 6 characters.');
  if(AM=='up'){if(L[u])return e('This username is taken.');const s=Math.random().toString(36).slice(2);L[u]={s,h:await hash(p,s)};localStorage.setItem('ef_acc',JSON.stringify(L))}
@@ -253,14 +277,31 @@ let V='home',A=0,P=0;
 function go(v,a){INQ=0;V=v;A=a||0;P=0;scrollTo(0,0);draw()}
 let SQ='',TD='Lessons';
 function tgl(){S.set.theme=document.documentElement.hasAttribute('data-d')?'light':'dark';save();theme();draw()}
+
+const ICP={
+home:'<path d="M3 11.2 12 3.8l9 7.4"/><path d="M5.5 9.8v10.4h13V9.8"/><rect class=f x="10" y="13.6" width="4" height="6.6" rx="1.2"/>',
+learn:'<circle cx="12" cy="12" r="9.2"/><path class=f d="m16 8-2.1 5.9L8 16l2.1-5.9z"/><circle class=g cx="12" cy="12" r="1.1"/>',
+review:'<rect x="3.5" y="6.5" width="13" height="14" rx="2.2"/><path d="M7.5 3.5h11a2 2 0 0 1 2 2V16"/><path class=f d="M7 11h6v2H7z"/><path d="M7 16.5h4"/>',
+progress:'<path d="M4 20.5h16"/><rect class=f x="5" y="12" width="3.4" height="8.5" rx="1"/><rect x="10.3" y="6" width="3.4" height="14.5" rx="1"/><rect class=f x="15.6" y="9.5" width="3.4" height="11" rx="1"/>',
+gear:'<mask id=gm><rect width="24" height="24" fill="#fff"/><circle cx="12" cy="12" r="3.1" fill="#000"/></mask><g class=g mask="url(#gm)"><rect x="10.4" y="1.6" width="3.2" height="20.8" rx="1.2"/><rect x="10.4" y="1.6" width="3.2" height="20.8" rx="1.2" transform="rotate(45 12 12)"/><rect x="10.4" y="1.6" width="3.2" height="20.8" rx="1.2" transform="rotate(90 12 12)"/><rect x="10.4" y="1.6" width="3.2" height="20.8" rx="1.2" transform="rotate(135 12 12)"/><circle cx="12" cy="12" r="7.2"/></g><circle class=f cx="12" cy="12" r="1.5"/>',
+bell:'<path d="M6 17V11a6 6 0 0 1 12 0v6l1.6 2H4.4z"/><path class=f d="M10 21h4a2 2 0 0 1-4 0z"/>',
+moon:'<path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2z"/><circle class=f cx="17" cy="6" r="1.6"/>',
+share:'<circle cx="6" cy="12" r="2.6"/><circle class=f cx="18" cy="5.5" r="2.6"/><circle cx="18" cy="18.5" r="2.6"/><path d="m8.3 10.7 7.4-4M8.3 13.3l7.4 4"/>',
+chat:'<path d="M4 5.5h16v10.5H11l-5 4v-4H4z"/><path class=f d="M8 9h8v1.8H8z"/>',
+pen:'<path d="M4 20l1-4.5L16.5 4a2.1 2.1 0 0 1 3 3L8 18.5z"/><path class=f d="m14.5 6 3.5 3.5"/>',
+dl:'<path d="M12 4v11"/><path d="m7.5 11 4.5 4.5L16.5 11"/><path class=f d="M5 19h14v1.8H5z"/>',
+copy:'<rect x="8" y="8" width="12" height="12" rx="2.2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/>',
+doc:'<path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4"/><path class=f d="M9 12h6v1.8H9z"/><path d="M9 16.5h4"/>'};
+const ic=(n,x)=>`<svg class="ic ic-${n} ${x||''}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${ICP[n]}</svg>`;
 function draw(){
- const fb=$('#fab');if(fb)fb.style.display=(!USER||REC)?'none':'';
+ const ae=document.activeElement;if((!USER||REC)&&ae&&ae.closest&&ae.closest('.auth')&&/INPUT/.test(ae.tagName)&&$('#app').contains(ae)&&!draw.force)return;
+ const fb=$('#fab');if(fb){fb.style.display=(!USER||REC)?'none':'';if(!fb.firstChild)fb.innerHTML=ic('chat')}
  if(!USER||REC){$('#nav').innerHTML='';$('#app').innerHTML=vAuth();return}
  if(!S.placed)V='test';
- const tabs=[['home','🏠','Home'],['learn','📚','Learn'],['review','🗂️','Review'],['progress','📊','Progress'],['settings','⚙️','Settings']];
- $('#nav').innerHTML=tabs.map(t=>`<button class="${V==t[0]||((V=='lesson'||V=='gram')&&t[0]=='learn')?'on':''}" onclick="go('${t[0]}')"><span>${t[1]}</span>${t[2]}</button>`).join('');
- const top=`<div class=top><img class=logo src="favicon.png" alt=""><b>English First</b><input id=sq value="${SQ.replace(/"/g,'')}" placeholder="Search lessons and words" aria-label=Search onkeydown="if(event.key=='Enter'){SQ=this.value;go('search')}"><button class=ib aria-label="Due words" onclick="go('review')">🔔</button><button class=ib id=syn aria-label="Sync status" title="${SL[SYNC]}" onclick="go('settings')">${SI[SYNC]}</button><div class=av>${esc((S.set.name||EMAIL||USER||'?')[0].toUpperCase())}</div><button class=ib aria-label="Switch theme" onclick="tgl()">🌓</button></div>`;
- $('#app').innerHTML=top+({home:vHome,learn:vLearn,lesson:vLesson,gram:vGram,review:vReview,progress:vProgress,settings:vSet,test:vTest,cert:vCert,search:vSearch,help:vHelp})[V]();
+ const tabs=[['home','home','Home'],['learn','learn','Learn'],['review','review','Review'],['progress','progress','Progress'],['settings','gear','Settings']];
+ $('#nav').innerHTML=tabs.map(t=>`<button class="${V==t[0]||((V=='lesson'||V=='gram')&&t[0]=='learn')?'on':''}" onclick="go('${t[0]}')"><span>${ic(t[1])}</span>${t[2]}</button>`).join('');
+ const top=`<div class=top><img class=logo src="favicon.png" alt=""><b>English First</b><input id=sq value="${SQ.replace(/"/g,'')}" placeholder="Search lessons and words" aria-label=Search onkeydown="if(event.key=='Enter'){SQ=this.value;go('search')}"><button class=ib aria-label="Due words" onclick="go('review')">${ic('bell')}</button><button class=ib aria-label="Install and share" onclick="go('share')">${ic('share')}</button><button class=ib id=syn aria-label="Sync status" title="${SL[SYNC]}" onclick="go('settings')">${SI[SYNC]}</button><div class=av>${esc((S.set.name||EMAIL||USER||'?')[0].toUpperCase())}</div><button class=ib aria-label="Switch theme" onclick="tgl()">${ic('moon')}</button></div>`;
+ $('#app').innerHTML=top+({home:vHome,learn:vLearn,lesson:vLesson,gram:vGram,review:vReview,progress:vProgress,settings:vSet,test:vTest,cert:vCert,search:vSearch,help:vHelp,share:vShare})[V]();
 }
 
 function sk(k,c){const t=S.sk[k]||[0,0],p=t[1]?Math.round(t[0]/t[1]*100):0,a=Math.min(100,t[1]);return`<div class="sk ${c}"><div class=st>${k}</div><div class=sb><span>Questions answered<br><big>${t[1]}</big></span><div class=ring style="--p:${a}"><i>${a}%</i></div></div><div class=sb><span>Correct answers<br><big>${t[0]}</big> / ${t[1]}</span><div class=ring style="--p:${p}"><i>${p}%</i></div></div><div class=fl><b style="min-width:${Math.max(p,16)}%">${p}%</b></div></div>`}
@@ -275,20 +316,20 @@ function todo(){const cl=curLevel();let r='';const tr=(pc,t,s,a,l)=>`<div class=
  else{if(CT[cl]){for(let ui=0;ui<4;ui++){const gu=(cl-1)*4+ui;if(utOpen(gu)&&!(S.ut[gu]>=75))r+=tr(S.ut[gu]!=null?S.ut[gu]+'%':'0%','Unit '+(ui+1)+' test','15 questions',`startUT(${gu})`)}if(ltOpen(cl)&&!(S.lt[cl]>=75))r+=tr('0%','Level '+cl+' test','30 questions',`startLT(${cl})`)}r+=tr(S.test?'L'+S.test.lvl:'—','Placement test','Find your exact level',"go('test')",'Retake')}
  return`<div class=card><h2>To do list</h2><div class=tabsl>${['Lessons','Grammar','Review','Tests'].map(t=>`<button class="${TD==t?'on':''}" onclick="TD='${t}';draw()">${t}</button>`).join('')}</div>${r}</div>`}
 /* ---------- Helper: finds things in the app, answers questions, explains rules (works offline) ---------- */
-const AR={'المضارع البسيط':'present simple','المضارع المستمر':'present continuous','الماضي البسيط':'past simple','الماضي المستمر':'past continuous','المضارع التام':'present perfect','المبني للمجهول':'passive','الشرط':'conditional','المستقبل':'future','صفات الملكية':'possessive','المقارنة':'comparative','الضمائر':'pronoun','افعال الحالة':'to be','الاستقبال':'future','الاسئلة المنقولة':'reported','الكلام المنقول':'reported','الموصولة':'relative','القدرة':'can','النصيحة':'should','العادة':'used to','التمني':'wish'};
+const AR={'المضارع البسيط':'present simple','المضارع المستمر':'present continuous','الماضي البسيط':'past simple','الماضي المستمر':'past continuous','المضارع التام':'present perfect','الماضي التام المستمر':'past perfect continuous','الماضي التام':'past perfect','المضارع التام المستمر':'present perfect continuous','المستقبل البسيط':'future will','المبني للمجهول':'passive','الشرط':'conditional','المستقبل':'future','صفات الملكية':'possessive','المقارنة':'comparative','الضمائر':'pronoun','افعال الحالة':'to be','الاستقبال':'future','الاسئلة المنقولة':'reported','الكلام المنقول':'reported','الموصولة':'relative','القدرة':'can','النصيحة':'should','العادة':'used to','التمني':'wish'};
 let HL=[],HO=0;
-function hOpen(){HO=!HO;const p=$('#hp');if(!p)return;p.hidden=!HO;if(HO){hDraw();if(!HL.length)hBot('Hi'+nmS()+'! I can find lessons and words, explain a grammar rule, and answer questions about the app. Try: “explain present simple”, “where is my next lesson?”, “meaning of hospital”, or ask in Arabic.',[['Next lesson','next'],['Grammar to do','gram'],['How do tests work?','tests']])}}
+function hOpen(){HO=!HO;const p=$('#hp');if(!p)return;p.hidden=!HO;if(HO){hDraw();if(!HL.length)hBot('Hi'+nmS()+'! I can find lessons and words, explain a grammar rule, and answer questions about the app. Try: “explain present simple”, “explain past perfect”, “where is my next lesson?”, “meaning of hospital”, or ask in Arabic.',[['Next lesson','next'],['Grammar to do','gram'],['How do tests work?','tests']])}}
 function hBot(t,acts){HL.push({b:1,t,acts:acts||[]});hDraw()}
 function hDraw(){const l=$('#hl');if(!l)return;l.innerHTML=HL.slice(-12).map(m=>m.b?`<div class=hb>${m.t}${(m.acts||[]).map(a=>`<br><button class=chip onclick="hAct('${a[1]}')">${esc(a[0])}</button>`).join('')}</div>`:`<div class=hu>${esc(m.t)}</div>`).join('');l.scrollTop=l.scrollHeight}
 function hSend(){const i=$('#hi'),q=i.value.trim();if(!q)return;i.value='';HL.push({t:q});hDraw();hAns(q)}
-function hAct(a){HO=0;$('#hp').hidden=true;if(a=='next')return hNext();if(a=='gram'){const d=grDue();return d.length?go('gram',d[0]):go('learn')}if(a=='tests')return hBot2('Unit test: 15 questions after the 3 lessons and the grammar rule of a unit (75% to pass). Level test: 30 questions after the 4 unit tests. The placement test finds your level and opens all levels below it.');
+function hAct(a){if(a.indexOf('part:')==0){const p=a.split(':');return hBot(gPart(+p[1],p[2])+'<br>Is it clearer now?',[['Yes, thanks','say:Great']].slice(0,0).concat([['Another part','part:'+p[1]+':'+(p[2]=='f'?'x':p[2]=='x'?'m':'f')],['Open the full lesson','gram:'+p[1]]]))}HO=0;$('#hp').hidden=true;if(a=='next')return hNext();if(a=='gram'){const d=grDue();return d.length?go('gram',d[0]):go('learn')}if(a=='tests')return hBot2('Unit test: 15 questions after the 3 lessons and the grammar rule of a unit (75% to pass). Level test: 30 questions after the 4 unit tests. The placement test finds your level and opens all levels below it.');
  const i=a.indexOf(':'),k=a.slice(0,i),v=a.slice(i+1);if(k=='gram')go('gram',+v);else if(k=='lesson'){P=0;go('lesson',+v)}else if(k=='go')go(v);else if(k=='say')say(v)}
 function hBot2(t){HO=1;$('#hp').hidden=false;hBot(t)}
 function hNext(){const cl=curLevel(),l=LS.filter(x=>x.lv==cl&&S.done[x.id]==null&&lessonOpen(x))[0];if(l){P=0;go('lesson',l.id)}else go('learn')}
 function hAns(q){const t=q.toLowerCase();let tx=t;Object.keys(AR).forEach(k=>{if(q.includes(k))tx+=' '+AR[k]});
  const tok=tx.replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>2&&!['the','and','how','what','does','explain','rule','grammar','about','tell','can','you','with','for','use','when','why','meaning','mean','word','lesson','where','find','show','please'].includes(w));
- const gi=GR.map((g,i)=>[i,tok.reduce((s,w)=>s+((g.t+' '+g.f).toLowerCase().includes(w)?2:g.e.toLowerCase().includes(w)?1:0),0)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
- if(/قاعد|قواعد|explain|rule|grammar|شرح|اشرح|وضح/.test(tx)&&gi.length){const g=GR[gi[0][0]];return hBot(`I found this rule: <b>${esc(g.t)}</b> (Level ${Math.floor(gi[0][0]/4)+1}, Unit ${gi[0][0]%4+1}). ${esc(g.e)}<br><span class=ar>${esc(g.a)}</span><br>Do you want the step-by-step explanation with practice?`,[['Explain it to me','gram:'+gi[0][0]],...(gi[1]?[['Also: '+GR[gi[1][0]].t,'gram:'+gi[1][0]]]:[])])}
+ const gi=GR.map((g,i)=>{const tl=g.t.toLowerCase().replace(/[^a-z ]/g,' '),tw=tl.split(/\s+/).filter(w=>w.length>2&&!['and','the'].includes(w)),hit=tw.filter(w=>tok.includes(w)).length,body=tok.reduce((s,w)=>s+((g.f+' '+g.e).toLowerCase().includes(w)?.2:0),0);return[i,(hit?hit*4-(tw.length-hit)*1.5:0)+(tx.replace(/[^a-z ]/g,' ').replace(/\s+/g,' ').includes(tl.trim().replace(/\s+/g,' '))?20:0)+body]}).filter(x=>x[1]>0.3).sort((a,b)=>b[1]-a[1]||a[0]-b[0]);
+ if(/قاعد|قواعد|explain|rule|grammar|شرح|اشرح|وضح/.test(tx)&&gi.length){const g=GR[gi[0][0]];return hBot(`I found this rule: <b>${esc(g.t)}</b> (Level ${Math.floor(gi[0][0]/4)+1}, Unit ${gi[0][0]%4+1}). ${esc(g.e)}<br><span class=ar>${esc(g.a)}</span><br>Do you want the step-by-step explanation with practice?`,[['Explain it to me','gram:'+gi[0][0]],...PARTS.concat(GP[gi[0][0]]?[['p','Negative and questions (picture)']]:[]).map(a=>['I did not understand: '+a[1],'part:'+gi[0][0]+':'+a[0]]),...(gi[1]?[['Also: '+GR[gi[1][0]].t,'gram:'+gi[1][0]]]:[])])}
  if(/next|continue|start|التالي|ابدأ|اكمل|أكمل|درسي/.test(tx))return hBot('Your next lesson is ready.',[['Open my next lesson','next']]);
  if(/test|exam|placement|اختبار|امتحان|تحديد/.test(tx))return hBot('The placement test finds your level (1 to 20) and opens everything below it. Unit tests have 15 questions and level tests 30 questions. You need 75% to pass.',[['Open placement test','go:test']]);
  if(/lock|unlock|open|locked|قفل|مقفل|افتح|مفتوح/.test(tx))return hBot('A lesson opens after the previous lesson quiz. Inside a lesson you finish Reading, Writing, Listening and Speaking, then the quiz. A unit test opens after the 3 lessons and the grammar rule. A level opens after the previous level test or a higher placement result.');
@@ -304,7 +345,7 @@ function hAns(q){const t=q.toLowerCase();let tx=t;Object.keys(AR).forEach(k=>{if
 let UPD=null;
 function showUpd(){if($('#upd'))return;const d=document.createElement('div');d.id='upd';d.setAttribute('role','alertdialog');d.innerHTML='<b>A new version is ready</b><p>Your progress is saved and will not be lost. Update now?</p><button class=btn onclick="doUpd()">Update now</button> <button class=btn2 onclick="this.parentNode.remove()">Later</button>';document.body.appendChild(d)}
 function doUpd(){try{if(USER)localStorage.setItem('ef_bak_'+USER,JSON.stringify(S))}catch(e){}const sw=()=>{if(UPD)UPD.postMessage('skip');else location.reload()};if(sb&&SESS)push().then(sw,sw);else sw()}
-function regSW(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('service-worker.js').then(reg=>{
+function regSW(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('sw.js').then(reg=>{
  const chk=w=>{if(w&&w.state=='installed'&&navigator.serviceWorker.controller){UPD=w;showUpd()}};
  if(reg.waiting)chk(reg.waiting);reg.addEventListener('updatefound',()=>{const w=reg.installing;if(w)w.addEventListener('statechange',()=>chk(w))});
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='visible')reg.update().catch(()=>{})})}).catch(()=>{});
@@ -376,7 +417,7 @@ const nmS=()=>S.set.name?', '+esc(S.set.name):'';
 function cele(t,s){setTimeout(()=>{try{confetti()}catch(e){}},60);return`<div class=cele><div style="font-size:54px" aria-hidden=true>🎉</div><h1>${t}</h1><p>${s}</p></div>`}
 /* ---------- Quiz engine ---------- */
 let Q=null;
-const others=(k,v,n)=>sh(POOL.filter(w=>w[k]!=v)).slice(0,n).map(w=>w[k]);
+const others=(k,v,n)=>{const u=new Set([v]),o=[];for(const w of sh(POOL.filter(w=>w[k]!=v))){if(u.has(w[k]))continue;u.add(w[k]);o.push(w[k]);if(o.length>=n)break}return o};
 const mc=w=>({q:`What does “${w.en}” mean?`,k:'Vocabulary',say:w.en,o:sh([w.ar,...others('ar',w.ar,3)]),a:w.ar,ar:1,w});
 const tw=w=>({q:`Write the English word for “${w.ar}”.`,k:'Writing',type:1,a:w.en,w});
 const dict=w=>({q:'Listen and type the word.',k:'Writing',say:w.en,type:1,a:w.en,w,dict:1});
@@ -432,6 +473,41 @@ function narrate(gu,slow){const g=GR[gu];if(!g)return;try{speechSynthesis.cancel
  let k=0;const nxt=()=>{document.querySelectorAll('.hl').forEach(e=>e.classList.remove('hl'));if(k>=parts.length)return;const p=parts[k++],el=document.getElementById(p[0]);if(el)el.classList.add('hl');try{const u=new SpeechSynthesisUtterance(p[1]);u.lang=S.set.acc;u.rate=slow?.7:Math.min(S.set.rate,.95);u.onend=()=>setTimeout(nxt,350);u.onerror=()=>{};speechSynthesis.speak(u)}catch(e){}};nxt()}
 function startGram(gu){const g=GR[gu];POOL=ALL;runQuiz(g.q.map(q=>({q:q[0],k:'Grammar',o:sh(q.slice(1)),a:q[1]})),'Grammar · '+g.t,pct=>{const ok=pct>=67;if(ok){S.gr[gu]=Math.max(S.gr[gu]||0,pct);S.days[today()]=S.days[today()]||0;save()}
   return`<h1>${pct}%</h1>${ok?cele('Well done'+nmS()+'!','You learned a new rule: '+esc(g.t)):'<p>You need 2 correct answers out of 3. Listen to the explanation again and retry.</p>'}${ok?`<div class=card><b>Did you understand this rule?</b><p><button class=btn onclick="OL=${Math.floor(gu/4)+1};go('learn')">Yes, I understood</button> <button class=btn2 onclick="GN=1;go('gram',${gu})">Not completely. Explain again</button></p></div>`:`<button class=btn onclick="go('gram',${gu})">Back to the explanation</button>`}`})}
+
+/* ---------- Grammar posters (picture explanations), part chooser, share/install ---------- */
+const GP={3:['pressimple'],6:['prescont'],12:['pastsimple'],13:['pastsimple'],15:['pastcont'],16:['presperf','presperfs'],24:['presperf'],19:['future'],32:['pastperf'],40:['pastperfcont']};
+const gpSrc=n=>'g-'+n+'.jpg';
+function zoomImg(n){const d=document.createElement('div');d.id='zm';d.setAttribute('role','dialog');d.innerHTML='<button class=btn type=button onclick="this.parentNode.remove()">✕ Close</button><p>Scroll sideways and up or down to read the picture</p><div class=zs><img alt="Grammar poster" src="'+gpSrc(String(n).replace(/[^a-z]/g,''))+'"></div>';document.body.appendChild(d)}
+const pImg=gu=>(GP[gu]||[]).map(n=>`<img class=pimg src="${gpSrc(n)}" alt="Poster: ${esc(GR[gu].t)}" loading=lazy onclick="zoomImg('${n}')">`).join('');
+const PARTS=[['f','Pattern'],['u','When to use it'],['x','Examples'],['m','Common mistake']];
+function gPart(gu,k){const g=GR[gu];if(!g)return'';let h='';
+ if(k=='f'){const bits=g.f.split(/\s*[+·]\s*/).filter(Boolean);h=`<b>The pattern, step by step</b><br>`+bits.map((b,i)=>`<div class=stp><b class=n>${i+1}</b><span>${esc(b)}${i==0?' (comes first)':''}</span></div>`).join('')+`<div>Put them in this order: <b style="color:var(--ac)">${esc(g.f)}</b><br>Example: <b>${esc(g.x[0])}</b></div>`}
+ else if(k=='u')h=`<b>When do we use it?</b><br>${esc(g.e)}<br><span class=ar>${esc(g.a)}</span>`;
+ else if(k=='x')h=`<b>Examples</b>`+g.x.map(x=>`<div class=stp><span>• <b>${esc(x)}</b></span></div>`).join('')+`<div class=mut>Read each one aloud. Change one word and make your own sentence.</div>`;
+ else if(k=='m')h=`<b>A common mistake</b><br><span style="color:var(--bad)">✘ ${esc(g.m[0])}</span><br><span style="color:var(--ok)">✔ ${esc(g.m[1])}</span>`;
+ if(k=='p'||k=='f'||k=='u'||k=='x')h+=((GP[gu]&&(k=='p'||k=='f'))?'<br>'+(k=='p'?'<span class=mut>See the negative and question forms in the picture. Tap it to enlarge.</span>':'<span class=mut>Here is the same idea as a picture:</span>')+pImg(gu):'');
+ if(k=='p'&&!GP[gu])h='This rule has no picture yet. Use the pattern and examples.';
+ return h}
+function gPartsRow(gu,hlp){const ks=PARTS.concat(GP[gu]?[['p','Negative and questions (picture)']]:[]);return ks.map(a=>`<button type=button class=chip onclick="${hlp?`hAct('part:${gu}:${a[0]}')`:`gShow(${gu},'${a[0]}')`}">${a[1]}</button>`).join('')}
+function gShow(gu,k){const e=$('#gp');if(e)e.innerHTML='<div class=card style="margin:8px 0">'+gPart(gu,k)+'<p class=mut>Better now?</p><button type=button class=btn2 onclick="gShow('+gu+',\'x\')">Show examples</button></div>'}
+function vShare(){const url=appUrl(),ios=/iphone|ipad|ipod/i.test(navigator.userAgent||'');
+ const st=(n,t)=>`<div class=stp><b class=n>${n}</b><span>${t}</span></div>`;
+ return`<h1>INSTALL AND SHARE</h1><p class=mut>ثبّت التطبيق على شاشتك الرئيسية، وشاركه مع أصدقائك.</p>
+ ${isApp()?'<div class=card><b>✔ The app is installed on this device.</b></div>':''}
+ <div class=card><h2>How to install</h2>${DIP?'<button class=btn type=button onclick="DIP.prompt();DIP.userChoice.finally(()=>{DIP=null;draw()})">'+ic('dl')+' Install now</button>':''}
+ <h3>📱 iPhone / iPad (Safari)</h3>${st(1,'Open this site in <b>Safari</b>.')}${st(2,'Tap the <b>Share</b> button ⎘ at the bottom of the screen.')}${st(3,'Choose <b>Add to Home Screen</b> ➕.')}${st(4,'Tap <b>Add</b>. The app opens full screen with its own icon.')}
+ <h3>🤖 Samsung / Android (Chrome)</h3>${st(1,'Open this site in <b>Chrome</b>.')}${st(2,'Tap the <b>three dots</b> ⋮ at the top of the browser.')}${st(3,'Choose <b>Install app</b> or <b>Add to Home screen</b>.')}${st(4,'Tap <b>Install</b>.')}
+ <h3>💻 Computer (PC / Mac)</h3>${st(1,'Open this site in <b>Chrome</b> or <b>Edge</b>.')}${st(2,'Click the <b>install icon</b> ⬇️ at the right of the address bar.')}${st(3,'Click <b>Install</b>.')}${ios?'<p class=mut>You are on an iPhone or iPad: use the first guide.</p>':''}</div>
+ <div class=card><h2>Share the app</h2><p class=mut>Send the link on WhatsApp, Telegram or any app.</p><button class=btn type=button onclick="shareApp()">${ic('share')} Share the app</button> <button class=btn2 type=button onclick="copyLink()">${ic('copy')} Copy link</button><p id=shm class=mut role=status></p><p class=mut dir=ltr style="word-break:break-all">${esc(url)}</p></div>
+ <div class=card style="text-align:center"><h2>QR code</h2><img class=qr src="qr.png" alt="QR code of the app" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><p class=mut hidden>qr.png was not found. Put your QR image in the app folder with the name qr.png.</p><p class=mut>Scan the code with your phone camera to open the app directly.<br><span class=ar>امسح الرمز بكاميرا هاتفك لفتح التطبيق مباشرة.</span></p></div>`}
+function appUrl(){try{return location.origin+location.pathname.replace(/index\.html$/,'')}catch(e){return location.href}}
+function sm(t){const e=$('#shm');if(e)e.textContent=t}
+async function shareApp(){const d={title:'English First',text:'Learn English free from A1 to C1 with English First.',url:appUrl()};
+ try{if(navigator.share){await navigator.share(d);return}}catch(e){if(e&&e.name=='AbortError')return}
+ copyLink()}
+function copyLink(){const u=appUrl(),ok=()=>sm('Link copied. تم نسخ الرابط');
+ try{if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(u).then(ok,fb)}catch(e){}
+ fb();function fb(){const t=document.createElement('textarea');t.value=u;t.style.cssText='position:fixed;opacity:0';document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){sm(u)}t.remove()}}
 function vGram(){const gu=A,g=GR[gu];if(!g)return'<h1>GRAMMAR</h1><div class=card><p>This rule is not ready yet.</p></div>';const n=Math.floor(gu/4)+1,ui=gu%4,again=GN==1;
  const q=encodeURIComponent(g.t+' English grammar lesson for learners');
  return`<button class=btn2 onclick="OL=${n};go('learn')">← Back to Level ${n}</button><h1>GRAMMAR</h1><p class=mut>Level ${n} · Unit ${ui+1} · ${esc((CT[n]?CT[n][ui][0]:(TH[n-1]||[])[ui])||'')}</p>
@@ -439,6 +515,8 @@ function vGram(){const gu=A,g=GR[gu];if(!g)return'<h1>GRAMMAR</h1><div class=car
  <h3>Examples</h3>${g.x.map((x,i)=>`<div id=x${i} class="gl w"><b>${esc(x)}</b><button class=btn2 aria-label=Listen onclick="say(${esc(JSON.stringify(x)).replace(/&quot;/g,'&#34;')})">▶</button></div>`).join('')}
  <div id=n3 class=gl style="margin-top:10px"><p><span style="color:var(--bad)">✘ ${esc(g.m[0])}</span><br><span style="color:var(--ok)">✔ ${esc(g.m[1])}</span></p></div>
  <button class=btn onclick="narrate(${gu},${again})">▶ Explain it to me${again?' slowly':''}</button> <button class=btn2 onclick="try{speechSynthesis.cancel()}catch(e){}">■ Stop</button></div>
+ ${GP[gu]?`<div class=card><b>Picture explanation</b><p class=mut>Tap the picture to enlarge it.</p>${pImg(gu)}</div>`:''}
+ <div class=card><b>Which part is not clear?</b><p class=mut>Choose it and you get a deeper explanation.</p><div class=chips>${gPartsRow(gu,0)}</div><div id=gp></div></div>
  <div class=card><b>Practice</b><p class=mut>3 short questions. You need 2 correct answers.</p><button class=btn onclick="startGram(${gu})">Practise this rule</button> ${grOK(gu)?`<span class=mut>✔ Done · ${S.gr[gu]}%</span>`:''}</div>
  <div class=card><b>Want a teacher video?</b><p class=mut>Search for a teacher who explains this rule. Watch it yourself first and choose a clip that suits you (no music, suitable for your values). We have not checked outside videos.</p>${(window.GVIDEOS||{})[gu]?`<div class=vid><iframe src="https://www.youtube-nocookie.com/embed/${esc(window.GVIDEOS[gu])}?rel=0" title="Grammar video" allowfullscreen loading=lazy></iframe></div>`:''}<a class=btn2 style="display:inline-block;text-decoration:none" target=_blank rel="noopener noreferrer" href="https://www.youtube.com/results?search_query=${q}">Search on YouTube</a></div>`}
 /* ---------- Placement test: adaptive, Bayesian estimate, every learner sees different items ---------- */
@@ -554,10 +632,11 @@ function vSet(){const s=S.set,C=isC(USER);
  <div class=card><h2>Your data</h2><p class=mut>${C?'Your progress is saved in your account. You can also keep a backup file.':'Your progress is stored in this browser only. Export a backup to move it to another device.'}</p>
  <button class=btn2 onclick="exp()">Export backup</button> <label class=btn2 style="display:inline-block">Import backup<input type=file accept=.json hidden onchange="imp(this.files[0])"></label> <button class=btn2 onclick="resetProg()">Reset progress</button> <button class=btn2 onclick="go('help')">Help</button></div>`}
 let DIP=null;
-addEventListener('beforeinstallprompt',e=>{e.preventDefault();DIP=e;if(V=='settings'&&!INQ)draw()});
-addEventListener('appinstalled',()=>{DIP=null;if(V=='settings'&&!INQ)draw()});
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();DIP=e;if((V=='settings'||V=='share')&&!INQ)draw()});
+addEventListener('appinstalled',()=>{DIP=null;if((V=='settings'||V=='share')&&!INQ)draw()});
 const isApp=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
-function instCard(){if(isApp())return'';const ios=/iphone|ipad|ipod/i.test(navigator.userAgent||'');
+function instCard(){return`<div class=card><h2>Install and share</h2><p class=mut>Install the app, share it with friends, or show the QR code.</p><button class=btn type=button onclick="go('share')">${ic('share')} Open install and share</button></div>`}
+function instCardOld(){if(isApp())return'';const ios=/iphone|ipad|ipod/i.test(navigator.userAgent||'');
  return`<div class=card><h2>Install the app</h2><p class=mut>Install English First on your phone or computer. It opens like an app, works offline, and keeps your progress.</p>${DIP?'<button class=btn onclick="DIP.prompt();DIP.userChoice.finally(()=>{DIP=null;draw()})">Install now</button>':ios?'<p>On iPhone or iPad: tap the Share button in Safari, then <b>Add to Home Screen</b>.</p>':'<p class=mut>In Chrome or Edge, open the browser menu and choose <b>Install app</b> (or <b>Add to Home screen</b> on Android).</p>'}</div>`}
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(clean(S))],{type:'application/json'}));a.download='english-first-backup.json';a.click()}
 function imp(f){if(!f||f.size>500000)return alert('This file could not be read.');f.text().then(t=>{try{const o=JSON.parse(t);if(!isO(o))throw 0;S=mergeS(S,clean(o));save();theme();applyPrefs();go('home')}catch(e){alert('This file could not be read.')}})}
@@ -580,6 +659,7 @@ document.addEventListener('visibilitychange',()=>{if(sb&&SESS){if(document.visib
 addEventListener('online',async()=>{if(!sb)return;if(!SESS&&isC(USER)){try{const r=await sb.auth.getSession();if(r.data.session)await onSignedIn(r.data.session);else forget()}catch(e){}}else syncNow()});
 addEventListener('offline',()=>{if(SESS)setSync('off')});
 addEventListener('load',regSW);
+document.addEventListener('focusin',e=>{const t=e.target;if(t&&/INPUT|TEXTAREA/.test(t.tagName))setTimeout(()=>{try{t.scrollIntoView({block:'center',behavior:'smooth'})}catch(x){}},320)});
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
-(function(){const sp=$('#splash');if(!sp)return;let seen=0;try{seen=sessionStorage.getItem('ef_sp')}catch(e){}const end=()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),600)};if(seen){sp.remove();return}try{sessionStorage.setItem('ef_sp','1')}catch(e){}sp.onclick=end;setTimeout(end,matchMedia('(prefers-reduced-motion:reduce)').matches?1200:2600)})();
+(function(){const sp=$('#splash');if(!sp)return;let seen=0;try{seen=sessionStorage.getItem('ef_sp')}catch(e){}const end=()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),600)};if(seen){sp.remove();return}try{sessionStorage.setItem('ef_sp','1')}catch(e){}sp.onclick=end;sp.addEventListener('touchstart',end,{passive:true});setTimeout(end,matchMedia('(prefers-reduced-motion:reduce)').matches?1200:2600)})();
 </script></body></html>
