@@ -185,17 +185,22 @@ function save(){if(!USER)return;S.upd=Date.now();persist();if(sb&&SESS){clearTim
 const SI={ok:'☁️',busy:'🔄',wait:'☁️',off:'📴',err:'⚠️',local:'💾',idle:'☁️'};
 const SL={ok:'Synced',busy:'Syncing…',wait:'Changes waiting to sync',off:'Offline. Changes will sync when you are back online',err:'Sync problem',local:'Saved on this device only',idle:'Not signed in'};
 function setSync(s,e){SYNC=s;SERR=e?friendly(e):'';const a=$('#syn');if(a){a.textContent=SI[s];a.title=SL[s]}const b=$('#sst');if(b)b.textContent=SL[s]+(SERR?': '+SERR:'')}
-function friendly(e){const m=String((e&&e.message)||e||'');
- if(/invalid login/i.test(m))return'Wrong email or password.';
- if(/not confirmed/i.test(m))return'Confirm your email first. Check your inbox.';
- if(/already registered|already been registered/i.test(m))return'This email already has an account. Sign in instead.';
- if(/rate limit|too many/i.test(m))return'Too many attempts. Wait a few minutes and try again.';
+function friendly(e){const m=String((e&&e.message)||e||''),c=String((e&&(e.code||e.error_code))||''),st=e&&e.status;
+ if(c=='over_email_send_rate_limit'||/email rate limit/i.test(m))return'The free email service has reached its hourly limit. If you already created the account, tap Sign in. Otherwise wait a while and try again. (حد إرسال الإيميلات)';
+ if(c=='over_request_rate_limit'||c=='over_sms_send_rate_limit'||st==429||/rate limit|too many/i.test(m))return'Too many attempts from this network. Wait a few minutes and try again.';
+ if(c=='invalid_credentials'||/invalid login/i.test(m))return'The email or password is not correct. If you just created this account, confirm your email first. You can also use “Forgot password?”. (الإيميل أو كلمة المرور غير صحيحة)';
+ if(c=='email_not_confirmed'||/not confirmed/i.test(m))return'Please confirm your email first. Open the link we sent to your inbox (also check Spam), or resend it below.';
+ if(c=='user_already_exists'||c=='email_exists'||/already registered|already been registered|already exists/i.test(m))return'This email already has an account. Tap Sign in instead.';
+ if(c=='weak_password'||(/password/i.test(m)&&/(weak|at least|short|characters)/i.test(m)))return'Choose a stronger password: 8 or more characters with letters and numbers.';
+ if(c=='email_address_invalid'||/email address.*invalid|invalid.*email/i.test(m))return'This email address is not accepted. Check it for typing mistakes.';
+ if(c=='signup_disabled'||/signups? (not allowed|disabled)/i.test(m))return'New sign-ups are switched off in the cloud settings.';
  if(/failed to fetch|network|load failed/i.test(m))return'No connection. Check your internet and try again.';
  if(/provider is not enabled|unsupported provider/i.test(m))return'This sign-in method is not enabled yet.';
- if(/password/i.test(m)&&/(weak|at least|short)/i.test(m))return'Choose a stronger password (8+ characters).';
  if(/delete_my_account/i.test(m))return'Account deletion is not set up. Run the latest SUPABASE_SETUP.sql.';
  if(/progress/i.test(m)&&/(schema cache|exist|find)/i.test(m))return'The cloud database is not set up yet. Run SUPABASE_SETUP.sql.';
- return m.slice(0,120)||'Something went wrong.'}
+ return 'Something went wrong. Please try again.'}
+let RS='';
+async function resendMail(){if(!RS)return;try{const r=await sb.auth.resend({type:'signup',email:RS,options:{emailRedirectTo:RED()}});if(r.error)throw r.error;msg('Confirmation email sent again. Check your inbox and Spam.',1)}catch(e){msg(friendly(e))}}
 async function push(){if(!sb||!SESS)return;if(!navigator.onLine){setSync('off');return}setSync('busy');
  try{const r=await sb.from('progress').upsert({user_id:SESS.user.id,data:S,updated_at:new Date().toISOString()});if(r.error)throw r.error;setSync('ok')}catch(e){setSync(navigator.onLine?'err':'off',e)}}
 async function pull(){if(!sb||!SESS)return false;setSync('busy');
@@ -222,8 +227,17 @@ async function cauth(){const g=id=>($(id)||{}).value||'',em=g('#au').trim(),pw=g
  busy(true);try{
   if(AM=='forgot'){const r=await sb.auth.resetPasswordForEmail(em,{redirectTo:RED()});if(r.error)throw r.error;return msg('If this email has an account, a reset link is on its way.',1)}
   if(pw.length<8)return msg('Password must have at least 8 characters.');
-  let r;if(AM=='up'){r=await sb.auth.signUp({email:em,password:pw,options:{data:{name:nm.slice(0,30)},emailRedirectTo:RED()}});if(r.error)throw r.error;if(!r.data||!r.data.session){AM='in';return msg('Check your email and tap the confirmation link, then sign in.',1)}}
-  else{r=await sb.auth.signInWithPassword({email:em,password:pw});if(r.error)throw r.error}
+  const em2=em.toLowerCase();let r;
+  if(AM=='up'){r=await sb.auth.signUp({email:em2,password:pw,options:{data:{name:nm.slice(0,30)},emailRedirectTo:RED()}});
+   const dup=r.data&&r.data.user&&r.data.user.identities&&r.data.user.identities.length==0;
+   if(r.error||dup||!r.data||!r.data.session){
+    const t=await sb.auth.signInWithPassword({email:em2,password:pw});
+    if(!t.error&&t.data&&t.data.session)r=t;
+    else if(dup){AM='in';RS='';return msg('This email already has an account. Sign in with your password, or use “Forgot password?”.')}
+    else if(r.error&&!(r.error.code=='over_email_send_rate_limit'||/email rate limit/i.test(r.error.message||'')))throw r.error;
+    else if(r.error)throw r.error;
+    else{AM='in';RS=em2;draw.force=1;draw();draw.force=0;return msg('Account created. Now confirm your email: open the link we sent (check Spam), then sign in.',1)}}}
+  else{r=await sb.auth.signInWithPassword({email:em2,password:pw});if(r.error){if(r.error.code=='email_not_confirmed'||/not confirmed/i.test(r.error.message||''))RS=em2;throw r.error}}
   await onSignedIn(r.data.session)
  }catch(e){msg(friendly(e))}finally{busy(false)}}
 async function mlink(){const em=(($('#au')||{}).value||'').trim();if(!/^\S+@\S+\.\S+$/.test(em))return msg('Enter your email first.');
@@ -244,7 +258,7 @@ function vCloudAuth(){
  <p id=ae class="msg bad" role=status>${esc(AMSG)}</p>
  <button class=btn onclick="cauth()">${fg?'Send reset link':up?'Create account':'Sign in'}</button>
  ${fg?`<button class=btn2 onclick="AM='in';AMSG='';draw()">Back to sign in</button>`:`<button class=btn2 onclick="AM='${up?'in':'up'}';AMSG='';draw()">${up?'I have an account':'Create account'}</button>`}
- ${!fg&&!up?`<br><button class=lnk onclick="AM='forgot';AMSG='';draw()">Forgot password?</button><br><button class=lnk onclick="mlink()">Email me a sign-in link instead</button>`:''}
+ ${RS&&!up&&!fg?'<br><button class=lnk type=button onclick="resendMail()">Resend confirmation email</button>':''}${!fg&&!up?`<br><button class=lnk onclick="AM='forgot';AMSG='';draw()">Forgot password?</button><br><button class=lnk onclick="mlink()">Email me a sign-in link instead</button>`:''}
  ${soc&&!fg?`<div class=sep>or</div>${soc}`:''}
  <p class=mut>Your progress is saved to your account and follows you to every device.</p></div>`}
 async function hash(p,s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let x=5381;for(const c of s+p)x=(x*33^c.charCodeAt(0))>>>0;return'x'+x}}
@@ -329,7 +343,7 @@ function hNext(){const cl=curLevel(),l=LS.filter(x=>x.lv==cl&&S.done[x.id]==null
 function hAns(q){const t=q.toLowerCase();let tx=t;Object.keys(AR).forEach(k=>{if(q.includes(k))tx+=' '+AR[k]});
  const tok=tx.replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>2&&!['the','and','how','what','does','explain','rule','grammar','about','tell','can','you','with','for','use','when','why','meaning','mean','word','lesson','where','find','show','please'].includes(w));
  const gi=GR.map((g,i)=>{const tl=g.t.toLowerCase().replace(/[^a-z ]/g,' '),tw=tl.split(/\s+/).filter(w=>w.length>2&&!['and','the'].includes(w)),hit=tw.filter(w=>tok.includes(w)).length,body=tok.reduce((s,w)=>s+((g.f+' '+g.e).toLowerCase().includes(w)?.2:0),0);return[i,(hit?hit*4-(tw.length-hit)*1.5:0)+(tx.replace(/[^a-z ]/g,' ').replace(/\s+/g,' ').includes(tl.trim().replace(/\s+/g,' '))?20:0)+body]}).filter(x=>x[1]>0.3).sort((a,b)=>b[1]-a[1]||a[0]-b[0]);
- if(/قاعد|قواعد|explain|rule|grammar|شرح|اشرح|وضح/.test(tx)&&gi.length){const g=GR[gi[0][0]];return hBot(`I found this rule: <b>${esc(g.t)}</b> (Level ${Math.floor(gi[0][0]/4)+1}, Unit ${gi[0][0]%4+1}). ${esc(g.e)}<br><span class=ar>${esc(g.a)}</span><br>Do you want the step-by-step explanation with practice?`,[['Explain it to me','gram:'+gi[0][0]],...PARTS.concat(GP[gi[0][0]]?[['p','Negative and questions (picture)']]:[]).map(a=>['I did not understand: '+a[1],'part:'+gi[0][0]+':'+a[0]]),...(gi[1]?[['Also: '+GR[gi[1][0]].t,'gram:'+gi[1][0]]]:[])])}
+ if(gi.length&&(/قاعد|قواعد|explain|rule|grammar|شرح|اشرح|وضح/.test(tx)||(gi[0][1]>=1&&tok.length<=3))){const g=GR[gi[0][0]];return hBot(`I found this rule: <b>${esc(g.t)}</b> (Level ${Math.floor(gi[0][0]/4)+1}, Unit ${gi[0][0]%4+1}). ${esc(g.e)}<br><span class=ar>${esc(g.a)}</span><br>Do you want the step-by-step explanation with practice?`,[['Explain it to me','gram:'+gi[0][0]],...PARTS.concat(GP[gi[0][0]]?[['p','Negative and questions (picture)']]:[]).map(a=>['I did not understand: '+a[1],'part:'+gi[0][0]+':'+a[0]]),...(gi[1]?[['Also: '+GR[gi[1][0]].t,'gram:'+gi[1][0]]]:[])])}
  if(/next|continue|start|التالي|ابدأ|اكمل|أكمل|درسي/.test(tx))return hBot('Your next lesson is ready.',[['Open my next lesson','next']]);
  if(/test|exam|placement|اختبار|امتحان|تحديد/.test(tx))return hBot('The placement test finds your level (1 to 20) and opens everything below it. Unit tests have 15 questions and level tests 30 questions. You need 75% to pass.',[['Open placement test','go:test']]);
  if(/lock|unlock|open|locked|قفل|مقفل|افتح|مفتوح/.test(tx))return hBot('A lesson opens after the previous lesson quiz. Inside a lesson you finish Reading, Writing, Listening and Speaking, then the quiz. A unit test opens after the 3 lessons and the grammar rule. A level opens after the previous level test or a higher placement result.');
