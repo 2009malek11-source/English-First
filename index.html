@@ -14,10 +14,11 @@
 body::before{content:"";position:fixed;left:-90px;top:70px;width:250px;height:250px;border-radius:50%;background:#b8e9f3;opacity:.5;z-index:-1}
 body::after{content:"";position:fixed;right:-110px;bottom:60px;width:300px;height:300px;border-radius:50%;border:48px solid #f9dfa0;opacity:.5;z-index:-1}
 .app{max-width:1100px;margin:auto;padding:env(safe-area-inset-top) max(16px,env(safe-area-inset-right)) calc(110px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
-.top{display:flex;align-items:center;gap:10px;padding:14px 0;position:sticky;top:0;z-index:8;background:var(--bg)}
+.gbar{position:sticky;top:0;z-index:9;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--ac);color:#fff;padding:8px 12px;border-radius:0 0 14px 14px;font-size:13px;margin:0 -2px}.gbar button{flex:none;border:0;background:var(--ac2);color:#1c1b4b;font-weight:700;border-radius:20px;padding:7px 14px;min-height:36px}.gbar .ar{opacity:.9;font-size:13px}.gbar~.top{top:46px}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:14px 0;position:sticky;top:0;z-index:8;background:var(--bg)}
 .logo{width:34px;height:34px;border-radius:8px;flex:none}
 .top b{color:var(--ac);font-size:20px;white-space:nowrap}
-.top input{flex:1;min-width:0;border-radius:24px;padding:12px 16px;background:var(--card)}
+.top input{flex:1 1 100%;order:9;min-width:0;border-radius:24px;padding:12px 16px;background:var(--card)}
 .ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;color:var(--ink)}
 .av{width:44px;height:44px;border-radius:50%;background:var(--ac2);display:grid;place-items:center;font-weight:700;color:#1c1b4b}
 h1{font-size:34px;font-weight:300;letter-spacing:.5px;margin:18px 0 12px}h2{font-size:20px;margin:6px 0}h3{font-size:16px;margin:16px 0 6px}
@@ -172,8 +173,8 @@ function mergeS(a,b){a=clean(a);b=clean(b);if(a.rst!==b.rst)return a.rst>b.rst?a
 let USER=localStorage.getItem('ef_cur')||'';
 const CFG=window.SUPABASE_CONFIG||{};
 const CFGOK=!!(CFG.url&&CFG.anonKey&&!/YOUR-/i.test(CFG.url+CFG.anonKey));
-const isC=u=>/^c_/.test(u||'');
-if(CFGOK?!isC(USER):isC(USER))USER='';
+const isC=u=>/^c_/.test(u||''),isG=u=>u==='guest';let AUTHV=0;
+if(isC(USER)&&!CFGOK)USER='';if(CFGOK&&!isC(USER)&&USER!=='guest')USER='';
 let sb=null,SESS=null,EMAIL='',PROV='',SYNC=CFGOK?'idle':'local',SERR='',REC=0,AM='in',AMSG='',pushT=0;
 if(CFGOK&&window.supabase){try{sb=window.supabase.createClient(CFG.url,CFG.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})}catch(e){sb=null}}
 const KEY=()=>'ef2_'+USER;
@@ -208,11 +209,16 @@ async function pull(){if(!sb||!SESS)return false;setSync('busy');
  const rc=clean(r.data&&r.data.data),m=mergeS(S,rc),chL=jx(m)!==jx(S),chR=!r.data||jx(m)!==jx(rc);S=m;persist();
  if(chR)await push();else setSync('ok');return chL}
 async function syncNow(){if(!sb||!SESS)return;try{if(await pull()&&!INQ)draw()}catch(e){setSync(navigator.onLine?'err':'off',e)}}
+function mergeGuest(){try{const g=localStorage.getItem('ef2_guest');if(!g)return;S=mergeS(S,clean(JSON.parse(g)));persist();localStorage.removeItem('ef2_guest');localStorage.removeItem('ef_bak_guest')}catch(e){}}
+function guestGo(){AUTHV=0;USER='guest';EMAIL='';SESS=null;try{localStorage.setItem('ef_cur','guest')}catch(e){}loadS();setSync('local');theme();applyPrefs();go('home')}
+function wantAuth(){AUTHV=1;AM='in';AMSG='';draw.force=1;draw();draw.force=0}
+function backGuest(){AUTHV=0;go('home')}
+const GBTN=()=>`<div class=sep>or</div><button class=btn2 type=button onclick="${AUTHV?'backGuest()':'guestGo()'}">${AUTHV?'← Back to the app':'Continue as guest · الدخول كضيف'}</button><p class=mut>${AUTHV?'':'No account needed. Your progress stays on this device. You can sign in later from Settings or the top bar.'}</p>`;
 function forget(){clearTimeout(pushT);SESS=null;USER='';EMAIL='';S=DEF();localStorage.removeItem('ef_cur');AM='in';AMSG='';INQ=0;draw()}
 async function onSignedIn(ses){if(SESS&&SESS.user.id===ses.user.id){SESS=ses;return}
  SESS=ses;const u=ses.user;USER='c_'+u.id;EMAIL=u.email||'';PROV=(u.app_metadata&&u.app_metadata.provider)||'email';
  localStorage.setItem('ef_cur',USER);localStorage.setItem('ef_email_'+USER,EMAIL);AMSG='';
- loadS();const nm=u.user_metadata&&(u.user_metadata.name||u.user_metadata.full_name);if(nm&&!S.set.name){S.set.name=String(nm).slice(0,30);persist()}
+ loadS();mergeGuest();AUTHV=0;const nm=u.user_metadata&&(u.user_metadata.name||u.user_metadata.full_name);if(nm&&!S.set.name){S.set.name=String(nm).slice(0,30);persist()}
  try{await pull()}catch(e){setSync(navigator.onLine?'err':'off',e)}
  INQ=0;V='home';theme();applyPrefs();draw()}
 async function signOut(){if(sb&&SESS){clearTimeout(pushT);await push();if(SYNC!='ok'&&!confirm('Your latest progress has not synced yet. A copy stays on this device until you sign in again. Sign out anyway?'))return;if(SYNC=='ok')localStorage.removeItem(KEY())}
@@ -260,15 +266,15 @@ function vCloudAuth(){
  ${fg?`<button class=btn2 onclick="AM='in';AMSG='';draw()">Back to sign in</button>`:`<button class=btn2 onclick="AM='${up?'in':'up'}';AMSG='';draw()">${up?'I have an account':'Create account'}</button>`}
  ${RS&&!up&&!fg?'<br><button class=lnk type=button onclick="resendMail()">Resend confirmation email</button>':''}${!fg&&!up?`<br><button class=lnk onclick="AM='forgot';AMSG='';draw()">Forgot password?</button><br><button class=lnk onclick="mlink()">Email me a sign-in link instead</button>`:''}
  ${soc&&!fg?`<div class=sep>or</div>${soc}`:''}
- <p class=mut>Your progress is saved to your account and follows you to every device.</p></div>`}
+ <p class=mut>Your progress is saved to your account and follows you to every device.</p>${fg?'':GBTN()}</div>`}
 async function hash(p,s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let x=5381;for(const c of s+p)x=(x*33^c.charCodeAt(0))>>>0;return'x'+x}}
-function vLocalAuth(){const up=AM=='up';return`<div class="card auth"><h1>English First</h1><p class=mut>${up?'Create your account':'Sign in to continue'}</p><form onsubmit="localAuth();return false" novalidate>${up?'<input id=an aria-label="Your name" placeholder="Your name" maxlength=30 enterkeyhint=next>':''}<input id=au aria-label=Username placeholder=Username maxlength=20 autocapitalize=none autocorrect=off spellcheck=false autocomplete=username enterkeyhint=next><input id=ap type=password aria-label=Password placeholder="Password (6+ characters)" autocomplete=current-password enterkeyhint=go><button type=submit hidden></button></form><p id=ae class="msg bad">${esc(AMSG)}</p><button class=btn onclick="localAuth()">${up?'Create account':'Sign in'}</button> <button class=btn2 onclick="AM='${up?'in':'up'}';AMSG='';draw()">${up?'I have an account':'Create account'}</button><p class=mut>Cloud sign-in is not set up, so accounts are stored on this device only. See SETUP-CLOUD.md to turn on email, Google and Apple sign-in.</p></div>`}
+function vLocalAuth(){const up=AM=='up';return`<div class="card auth"><h1>English First</h1><p class=mut>${up?'Create your account':'Sign in to continue'}</p><form onsubmit="localAuth();return false" novalidate>${up?'<input id=an aria-label="Your name" placeholder="Your name" maxlength=30 enterkeyhint=next>':''}<input id=au aria-label=Username placeholder=Username maxlength=20 autocapitalize=none autocorrect=off spellcheck=false autocomplete=username enterkeyhint=next><input id=ap type=password aria-label=Password placeholder="Password (6+ characters)" autocomplete=current-password enterkeyhint=go><button type=submit hidden></button></form><p id=ae class="msg bad">${esc(AMSG)}</p><button class=btn onclick="localAuth()">${up?'Create account':'Sign in'}</button> <button class=btn2 onclick="AM='${up?'in':'up'}';AMSG='';draw()">${up?'I have an account':'Create account'}</button>${GBTN()}<p class=mut>Cloud sign-in is not set up, so accounts are stored on this device only. See SETUP-CLOUD.md to turn on email, Google and Apple sign-in.</p></div>`}
 async function localAuth(){const u=$('#au').value.trim().toLowerCase(),p=$('#ap').value,L=ACC(),e=m=>msg(m),nm=AM=='up'?$('#an').value.trim():'';
  if(!/^[a-z0-9_]{3,20}$/.test(u))return e('Username: 3 to 20 letters, numbers or _');if(p.length<6)return e('Password must have at least 6 characters.');
  if(AM=='up'){if(L[u])return e('This username is taken.');const s=Math.random().toString(36).slice(2);L[u]={s,h:await hash(p,s)};localStorage.setItem('ef_acc',JSON.stringify(L))}
  else{const a=L[u];if(!a||a.h!=await hash(p,a.s))return e('Wrong username or password.')}
- USER=u;localStorage.setItem('ef_cur',u);loadS();if(nm)S.set.name=nm.slice(0,30);save();theme();applyPrefs();go('home')}
-function vAuth(){if(CFGOK&&!sb)return`<div class="card auth"><h1>English First</h1><p>Cloud sign-in needs an internet connection. Check your connection and try again.</p><button class=btn onclick="location.reload()">Try again</button></div>`;return sb?vCloudAuth():vLocalAuth()}
+ USER=u;localStorage.setItem('ef_cur',u);loadS();mergeGuest();AUTHV=0;if(nm)S.set.name=nm.slice(0,30);save();theme();applyPrefs();go('home')}
+function vAuth(){if(CFGOK&&!sb)return`<div class="card auth"><h1>English First</h1><p>Cloud sign-in needs an internet connection. Check your connection and try again.</p><button class=btn onclick="location.reload()">Try again</button>${GBTN()}</div>`;return sb?vCloudAuth():vLocalAuth()}
 function applyPrefs(){const f={small:'14px',normal:'16px',large:'18px',xl:'20px'}[S.set.font]||'16px';document.documentElement.style.fontSize=f;document.documentElement.classList.toggle('calm',!!S.set.calm)}
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
@@ -308,14 +314,14 @@ copy:'<rect x="8" y="8" width="12" height="12" rx="2.2"/><path d="M16 8V5.5A1.5 
 doc:'<path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4"/><path class=f d="M9 12h6v1.8H9z"/><path d="M9 16.5h4"/>'};
 const ic=(n,x)=>`<svg class="ic ic-${n} ${x||''}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${ICP[n]}</svg>`;
 function draw(){
- const ae=document.activeElement;if((!USER||REC)&&ae&&ae.closest&&ae.closest('.auth')&&/INPUT/.test(ae.tagName)&&$('#app').contains(ae)&&!draw.force)return;
- const fb=$('#fab');if(fb){fb.style.display=(!USER||REC)?'none':'';if(!fb.firstChild)fb.innerHTML=ic('chat')}
- if(!USER||REC){$('#nav').innerHTML='';$('#app').innerHTML=vAuth();return}
+ const ae=document.activeElement;if((!USER||REC||AUTHV)&&ae&&ae.closest&&ae.closest('.auth')&&/INPUT/.test(ae.tagName)&&$('#app').contains(ae)&&!draw.force)return;
+ const fb=$('#fab');if(fb){fb.style.display=(!USER||REC||AUTHV)?'none':'';if(!fb.firstChild)fb.innerHTML=ic('chat')}
+ if(!USER||REC||AUTHV){$('#nav').innerHTML='';$('#app').innerHTML=vAuth();return}
  if(!S.placed)V='test';
  const tabs=[['home','home','Home'],['learn','learn','Learn'],['review','review','Review'],['progress','progress','Progress'],['settings','gear','Settings']];
  $('#nav').innerHTML=tabs.map(t=>`<button class="${V==t[0]||((V=='lesson'||V=='gram')&&t[0]=='learn')?'on':''}" onclick="go('${t[0]}')"><span>${ic(t[1])}</span>${t[2]}</button>`).join('');
  const top=`<div class=top><img class=logo src="favicon.png" alt=""><b>English First</b><input id=sq value="${SQ.replace(/"/g,'')}" placeholder="Search lessons and words" aria-label=Search onkeydown="if(event.key=='Enter'){SQ=this.value;go('search')}"><button class=ib aria-label="Due words" onclick="go('review')">${ic('bell')}</button><button class=ib aria-label="Install and share" onclick="go('share')">${ic('share')}</button><button class=ib id=syn aria-label="Sync status" title="${SL[SYNC]}" onclick="go('settings')">${SI[SYNC]}</button><div class=av>${esc((S.set.name||EMAIL||USER||'?')[0].toUpperCase())}</div><button class=ib aria-label="Switch theme" onclick="tgl()">${ic('moon')}</button></div>`;
- $('#app').innerHTML=top+({home:vHome,learn:vLearn,lesson:vLesson,gram:vGram,review:vReview,progress:vProgress,settings:vSet,test:vTest,cert:vCert,search:vSearch,help:vHelp,share:vShare})[V]();
+ $('#app').innerHTML=(isG(USER)?`<div class=gbar role=region aria-label="Sign in reminder"><span>Sign in to save your progress <span class=ar>· سجّل دخولك</span></span><button type=button onclick="wantAuth()">Sign in</button></div>`:'')+top+({home:vHome,learn:vLearn,lesson:vLesson,gram:vGram,review:vReview,progress:vProgress,settings:vSet,test:vTest,cert:vCert,search:vSearch,help:vHelp,share:vShare})[V]();
 }
 
 function sk(k,c){const t=S.sk[k]||[0,0],p=t[1]?Math.round(t[0]/t[1]*100):0,a=Math.min(100,t[1]);return`<div class="sk ${c}"><div class=st>${k}</div><div class=sb><span>Questions answered<br><big>${t[1]}</big></span><div class=ring style="--p:${a}"><i>${a}%</i></div></div><div class=sb><span>Correct answers<br><big>${t[0]}</big> / ${t[1]}</span><div class=ring style="--p:${p}"><i>${p}%</i></div></div><div class=fl><b style="min-width:${Math.max(p,16)}%">${p}%</b></div></div>`}
@@ -630,6 +636,7 @@ function vCert(){const n=A,dn=Object.keys(S.lt).filter(k=>S.lt[k]>=75);
 function sel(lbl,opts,cur,fn){return`<div class=set>${lbl}<select onchange="${fn}">${opts.map(o=>`<option value="${o[0]}" ${String(o[0])==String(cur)?'selected':''}>${o[1]}</option>`).join('')}</select></div>`}
 function vSet(){const s=S.set,C=isC(USER);
  const acct=C?`<div class=card><h2>Account</h2><div class=set><span>Signed in as<br><b>${esc(EMAIL||'—')}</b><br><span class=mut>${esc(PROV||'email')}</span></span></div><div class=set><span>Cloud sync<br><span class=mut id=sst>${SL[SYNC]}${SERR?': '+esc(SERR):''}</span></span><button class=btn2 onclick="syncNow().then(draw)">Sync now</button></div><button class=btn2 onclick="signOut()">Sign out</button> <button class=btn2 style="border-color:var(--bad);color:var(--bad)" onclick="delAcct()">Delete account</button></div>`
+ :isG(USER)?`<div class=card><h2>Account</h2><p>You are using the app as a <b>guest</b>. Your progress is saved on this device only.</p><button class=btn type=button onclick="wantAuth()">Sign in or create an account</button><p class=mut>Your guest progress will be added to your account.</p></div>`
  :`<div class=card><h2>Account</h2><p>Signed in as <b>${esc(USER)}</b> on this device.</p><p class=mut>${CFGOK?'Cloud sign-in is unavailable right now.':'Cloud sync is not set up, so your progress stays on this device only. See SETUP-CLOUD.md to turn on email, Google and Apple sign-in.'}</p><button class=btn2 onclick="localStorage.removeItem('ef_cur');location.reload()">Log out</button></div>`;
  return`<h1>SETTINGS</h1>${acct}${instCard()}<div class=card><h2>Learning</h2>
  <div class=set>Display name<input value="${esc(s.name)}" maxlength=30 onchange="S.set.name=this.value.trim().slice(0,30);save();draw()"></div>
@@ -664,6 +671,7 @@ function vHelp(){const q=[['How do I start?','Create an account, take the placem
   let ses=null;try{ses=(await sb.auth.getSession()).data.session}catch(e){}
   if(ses)await onSignedIn(ses);
   else if(isC(USER)&&!navigator.onLine){EMAIL=localStorage.getItem('ef_email_'+USER)||'';loadS();setSync('off')}
+  else if(isG(USER))loadS();
   else USER='';
  }else if(isC(USER)){EMAIL=localStorage.getItem('ef_email_'+USER)||'';loadS();setSync('off')}
  else if(USER)loadS();
