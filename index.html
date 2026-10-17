@@ -19,7 +19,7 @@ body::after{content:"";position:fixed;right:-110px;bottom:60px;width:300px;heigh
 .logo{width:34px;height:34px;border-radius:8px;flex:none}
 .top b{color:var(--ac);font-size:20px;white-space:nowrap}
 .top input{flex:1 1 100%;order:9;min-width:0;border-radius:24px;padding:12px 16px;background:var(--card)}
-.ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;color:var(--ink)}
+.ib{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;color:var(--ink);display:grid;place-items:center;padding:0;line-height:0}.ib .ic,#fab .ic{margin:0}
 .av{width:44px;height:44px;border-radius:50%;background:var(--ac2);display:grid;place-items:center;font-weight:700;color:#1c1b4b}
 h1{font-size:34px;font-weight:300;letter-spacing:.5px;margin:18px 0 12px}h2{font-size:20px;margin:6px 0}h3{font-size:16px;margin:16px 0 6px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:14px 0}
@@ -76,8 +76,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .cele{text-align:center;background:linear-gradient(135deg,#ebe8fb,#fdf0cf);border-radius:22px;padding:18px;margin:10px 0;color:#1c1b4b}.cele h1{margin:6px 0;font-size:28px;font-weight:600}.cele p{margin:4px 0}
 .gl{border-radius:12px;padding:2px 8px;transition:background .3s}.hl{background:#fdf0cf;color:#1c1b4b}[data-d] .hl{background:#3d3513;color:#fff}
 #upd{position:fixed;left:12px;right:12px;bottom:84px;max-width:420px;margin:auto;z-index:60;background:var(--card);border:2px solid var(--ac);border-radius:18px;padding:14px;box-shadow:0 10px 30px #0006}#upd p{margin:6px 0}
-#fab{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:calc(86px + env(safe-area-inset-bottom));z-index:20;width:54px;height:54px;border-radius:50%;border:0;background:var(--ac);color:#fff;font-size:24px;cursor:pointer;box-shadow:0 6px 18px #0004}
-#hp{position:fixed;right:10px;bottom:150px;z-index:21;width:min(380px,calc(100vw - 20px));max-height:62vh;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 36px #0005}#hp[hidden]{display:none}
+#fab{display:grid;place-items:center;padding:0;line-height:0;position:fixed;right:max(14px,env(safe-area-inset-right));bottom:calc(86px + env(safe-area-inset-bottom));z-index:20;width:54px;height:54px;border-radius:50%;border:0;background:var(--ac);color:#fff;font-size:24px;cursor:pointer;box-shadow:0 6px 18px #0004}
+#hp{position:fixed;inset:0;z-index:250;width:100%;height:100%;display:flex;flex-direction:column;background:var(--bg);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}.hh{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--ac);color:#fff;font-size:18px}.hx{width:44px;height:44px;border-radius:50%;border:0;background:#fff3;color:#fff;font-size:22px;cursor:pointer}#hl{max-width:760px;width:100%;margin:0 auto}#hp form{max-width:760px;width:100%;margin:0 auto}#hp[hidden]{display:none}
 #hl{overflow:auto;padding:12px;flex:1}.hb,.hu{padding:9px 12px;border-radius:14px;margin:6px 0;max-width:92%}.hb{background:var(--cb);color:var(--ink);border:1px solid var(--line)}.hu{background:var(--ac);color:#fff;margin-left:auto}
 #hp form{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}#hp input{flex:1}
 @media(max-width:560px){.top b{display:none}}
@@ -92,7 +92,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <div class="app" id="app"></div>
 <nav id="nav"></nav>
 <button id=fab aria-label="Ask the helper" onclick="hOpen()"></button>
-<div id=hp hidden role=dialog aria-label="Helper"><div id=hl></div><form onsubmit="hSend();return false"><input id=hi placeholder="Ask me anything about the app…" autocomplete=off><button class=btn>Send</button></form></div>
+<div id=hp hidden role=dialog aria-modal=true aria-label="Helper"><div class=hh><b>Helper · المساعد</b><button type=button class=hx onclick="hOpen()" aria-label="Close helper">✕</button></div><div id=hl></div><form onsubmit="hSend();return false"><input id=hi placeholder="Ask me anything about the app…" autocomplete=off><button class=btn>Send</button></form></div>
 <div id=splash role=img aria-label="English First"><img src="logo.png" alt="English First"></div>
 <script src="supabase-config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
@@ -183,9 +183,9 @@ const ACC=()=>{try{return JSON.parse(localStorage.getItem('ef_acc')||'{}')}catch
 function loadS(){try{let raw=localStorage.getItem(KEY());if(!raw)raw=localStorage.getItem('ef_bak_'+USER);S=clean(JSON.parse(raw||'null'))}catch(e){S=DEF()}}
 function persist(){if(USER)try{localStorage.setItem(KEY(),JSON.stringify(S))}catch(e){}}
 function save(){if(!USER)return;S.upd=Date.now();persist();if(sb&&SESS){clearTimeout(pushT);pushT=setTimeout(push,1500);setSync('wait')}}
-const SI={ok:'☁️',busy:'🔄',wait:'☁️',off:'📴',err:'⚠️',local:'💾',idle:'☁️'};
+const SIC={ok:'cloud',busy:'refresh',wait:'cloud',off:'cloudoff',err:'alert',local:'device',idle:'cloud'};const SIH=s=>ic(SIC[s]||'cloud');const SI={ok:'☁️',busy:'🔄',wait:'☁️',off:'📴',err:'⚠️',local:'💾',idle:'☁️'};
 const SL={ok:'Synced',busy:'Syncing…',wait:'Changes waiting to sync',off:'Offline. Changes will sync when you are back online',err:'Sync problem',local:'Saved on this device only',idle:'Not signed in'};
-function setSync(s,e){SYNC=s;SERR=e?friendly(e):'';const a=$('#syn');if(a){a.textContent=SI[s];a.title=SL[s]}const b=$('#sst');if(b)b.textContent=SL[s]+(SERR?': '+SERR:'')}
+function setSync(s,e){SYNC=s;SERR=e?friendly(e):'';const a=$('#syn');if(a){a.innerHTML=SIH(s);a.title=SL[s]}const b=$('#sst');if(b)b.textContent=SL[s]+(SERR?': '+SERR:'')}
 function friendly(e){const m=String((e&&e.message)||e||''),c=String((e&&(e.code||e.error_code))||''),st=e&&e.status;
  if(c=='over_email_send_rate_limit'||/email rate limit/i.test(m))return'The free email service has reached its hourly limit. If you already created the account, tap Sign in. Otherwise wait a while and try again. (حد إرسال الإيميلات)';
  if(c=='over_request_rate_limit'||c=='over_sms_send_rate_limit'||st==429||/rate limit|too many/i.test(m))return'Too many attempts from this network. Wait a few minutes and try again.';
@@ -294,7 +294,9 @@ const ltOpen=n=>!!CT[n]&&lvOpen(n)&&(n<(S.start||1)||[0,1,2,3].every(i=>S.ut[(n-
 function curLevel(){let n=Math.max(1,S.start||1);while(n<20&&S.lt[n]>=75)n++;return n}
 /* ---------- Router ---------- */
 let V='home',A=0,P=0;
-function go(v,a){INQ=0;V=v;A=a||0;P=0;scrollTo(0,0);draw()}
+function needTest(){if(S.placed)return false;GATE=1;INQ=0;V='test';A=0;scrollTo(0,0);draw();return true}
+let GATE=0;
+function go(v,a){if((v=='lesson'||v=='gram')&&needTest())return;INQ=0;V=v;A=a||0;P=0;scrollTo(0,0);draw()}
 let SQ='',TD='Lessons';
 function tgl(){S.set.theme=document.documentElement.hasAttribute('data-d')?'light':'dark';save();theme();draw()}
 
@@ -312,15 +314,15 @@ pen:'<path d="M4 20l1-4.5L16.5 4a2.1 2.1 0 0 1 3 3L8 18.5z"/><path class=f d="m1
 dl:'<path d="M12 4v11"/><path d="m7.5 11 4.5 4.5L16.5 11"/><path class=f d="M5 19h14v1.8H5z"/>',
 copy:'<rect x="8" y="8" width="12" height="12" rx="2.2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/>',
 doc:'<path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4"/><path class=f d="M9 12h6v1.8H9z"/><path d="M9 16.5h4"/>'};
+ICP.cloud='<path d="M7 18.5h10a4 4 0 0 0 .6-7.95A5.6 5.6 0 0 0 7 9.2 4.7 4.7 0 0 0 7 18.5z"/><path class=f d="m9.6 14 1.8 1.8 3.2-3.4" style="fill:none;stroke:var(--ac2);stroke-width:2"/>';ICP.cloudoff='<path d="M7 18.5h10a4 4 0 0 0 1.6-7.7A5.6 5.6 0 0 0 9 6.8"/><path d="M5.2 9.7A4.6 4.6 0 0 0 7 18.5"/><path d="m4 4 16 16" style="stroke:var(--bad)"/>';ICP.refresh='<path d="M20 12a8 8 0 0 1-14 5.3"/><path d="M4 12a8 8 0 0 1 14-5.3"/><path class=g d="M18.5 3v4.5H14z M5.5 21v-4.5H10z"/>';ICP.alert='<path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5"/><circle class=g cx="12" cy="17.2" r="1"/>';ICP.device='<rect x="7" y="2.8" width="10" height="18.4" rx="2.4"/><path class=f d="M10.5 18h3v1.6h-3z"/>';
 const ic=(n,x)=>`<svg class="ic ic-${n} ${x||''}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${ICP[n]}</svg>`;
 function draw(){
  const ae=document.activeElement;if((!USER||REC||AUTHV)&&ae&&ae.closest&&ae.closest('.auth')&&/INPUT/.test(ae.tagName)&&$('#app').contains(ae)&&!draw.force)return;
  const fb=$('#fab');if(fb){fb.style.display=(!USER||REC||AUTHV)?'none':'';if(!fb.firstChild)fb.innerHTML=ic('chat')}
  if(!USER||REC||AUTHV){$('#nav').innerHTML='';$('#app').innerHTML=vAuth();return}
- if(!S.placed)V='test';
  const tabs=[['home','home','Home'],['learn','learn','Learn'],['review','review','Review'],['progress','progress','Progress'],['settings','gear','Settings']];
  $('#nav').innerHTML=tabs.map(t=>`<button class="${V==t[0]||((V=='lesson'||V=='gram')&&t[0]=='learn')?'on':''}" onclick="go('${t[0]}')"><span>${ic(t[1])}</span>${t[2]}</button>`).join('');
- const top=`<div class=top><img class=logo src="favicon.png" alt=""><b>English First</b><input id=sq value="${SQ.replace(/"/g,'')}" placeholder="Search lessons and words" aria-label=Search onkeydown="if(event.key=='Enter'){SQ=this.value;go('search')}"><button class=ib aria-label="Due words" onclick="go('review')">${ic('bell')}</button><button class=ib aria-label="Install and share" onclick="go('share')">${ic('share')}</button><button class=ib id=syn aria-label="Sync status" title="${SL[SYNC]}" onclick="go('settings')">${SI[SYNC]}</button><div class=av>${esc((S.set.name||EMAIL||USER||'?')[0].toUpperCase())}</div><button class=ib aria-label="Switch theme" onclick="tgl()">${ic('moon')}</button></div>`;
+ const top=`<div class=top><img class=logo src="favicon.png" alt=""><b>English First</b><input id=sq value="${SQ.replace(/"/g,'')}" placeholder="Search lessons and words" aria-label=Search onkeydown="if(event.key=='Enter'){SQ=this.value;go('search')}"><button class=ib aria-label="Due words" onclick="go('review')">${ic('bell')}</button><button class=ib aria-label="Install and share" onclick="go('share')">${ic('share')}</button><button class=ib id=syn aria-label="Sync status" title="${SL[SYNC]}" onclick="go('settings')">${SIH(SYNC)}</button><div class=av>${esc((S.set.name||EMAIL||USER||'?')[0].toUpperCase())}</div><button class=ib aria-label="Switch theme" onclick="tgl()">${ic('moon')}</button></div>`;
  $('#app').innerHTML=(isG(USER)?`<div class=gbar role=region aria-label="Sign in reminder"><span>Sign in to save your progress <span class=ar>· سجّل دخولك</span></span><button type=button onclick="wantAuth()">Sign in</button></div>`:'')+top+({home:vHome,learn:vLearn,lesson:vLesson,gram:vGram,review:vReview,progress:vProgress,settings:vSet,test:vTest,cert:vCert,search:vSearch,help:vHelp,share:vShare})[V]();
 }
 
@@ -338,13 +340,14 @@ function todo(){const cl=curLevel();let r='';const tr=(pc,t,s,a,l)=>`<div class=
 /* ---------- Helper: finds things in the app, answers questions, explains rules (works offline) ---------- */
 const AR={'المضارع البسيط':'present simple','المضارع المستمر':'present continuous','الماضي البسيط':'past simple','الماضي المستمر':'past continuous','المضارع التام':'present perfect','الماضي التام المستمر':'past perfect continuous','الماضي التام':'past perfect','المضارع التام المستمر':'present perfect continuous','المستقبل البسيط':'future will','المبني للمجهول':'passive','الشرط':'conditional','المستقبل':'future','صفات الملكية':'possessive','المقارنة':'comparative','الضمائر':'pronoun','افعال الحالة':'to be','الاستقبال':'future','الاسئلة المنقولة':'reported','الكلام المنقول':'reported','الموصولة':'relative','القدرة':'can','النصيحة':'should','العادة':'used to','التمني':'wish'};
 let HL=[],HO=0;
-function hOpen(){HO=!HO;const p=$('#hp');if(!p)return;p.hidden=!HO;if(HO){hDraw();if(!HL.length)hBot('Hi'+nmS()+'! I can find lessons and words, explain a grammar rule, and answer questions about the app. Try: “explain present simple”, “explain past perfect”, “where is my next lesson?”, “meaning of hospital”, or ask in Arabic.',[['Next lesson','next'],['Grammar to do','gram'],['How do tests work?','tests']])}}
+function hOpen(){HO=!HO;const p=$('#hp');if(!p)return;p.hidden=!HO;const fb=$('#fab');if(fb)fb.style.visibility=HO?'hidden':'';document.body.style.overflow=HO?'hidden':'';if(HO){hDraw();if(!HL.length)hBot('Hi'+nmS()+'! I can find lessons and words, explain a grammar rule, and answer questions about the app. Try: “explain present simple”, “explain past perfect”, “where is my next lesson?”, “meaning of hospital”, or ask in Arabic.',[['Next lesson','next'],['Grammar to do','gram'],['How do tests work?','tests']])}}
 function hBot(t,acts){HL.push({b:1,t,acts:acts||[]});hDraw()}
 function hDraw(){const l=$('#hl');if(!l)return;l.innerHTML=HL.slice(-12).map(m=>m.b?`<div class=hb>${m.t}${(m.acts||[]).map(a=>`<br><button class=chip onclick="hAct('${a[1]}')">${esc(a[0])}</button>`).join('')}</div>`:`<div class=hu>${esc(m.t)}</div>`).join('');l.scrollTop=l.scrollHeight}
 function hSend(){const i=$('#hi'),q=i.value.trim();if(!q)return;i.value='';HL.push({t:q});hDraw();hAns(q)}
-function hAct(a){if(a.indexOf('part:')==0){const p=a.split(':');return hBot(gPart(+p[1],p[2])+'<br>Is it clearer now?',[['Yes, thanks','say:Great']].slice(0,0).concat([['Another part','part:'+p[1]+':'+(p[2]=='f'?'x':p[2]=='x'?'m':'f')],['Open the full lesson','gram:'+p[1]]]))}HO=0;$('#hp').hidden=true;if(a=='next')return hNext();if(a=='gram'){const d=grDue();return d.length?go('gram',d[0]):go('learn')}if(a=='tests')return hBot2('Unit test: 15 questions after the 3 lessons and the grammar rule of a unit (75% to pass). Level test: 30 questions after the 4 unit tests. The placement test finds your level and opens all levels below it.');
+function hClose(){if(HO)hOpen()}
+function hAct(a){if(a=='close')return hOpen();if(a.indexOf('part:')==0){const p=a.split(':');return hBot(gPart(+p[1],p[2])+'<br>Is it clearer now?',[['Yes, thanks','say:Great']].slice(0,0).concat([['Another part','part:'+p[1]+':'+(p[2]=='f'?'x':p[2]=='x'?'m':'f')],['Open the full lesson','gram:'+p[1]]]))}hClose();if(a=='next')return hNext();if(a=='gram'){const d=grDue();return d.length?go('gram',d[0]):go('learn')}if(a=='tests')return hBot2('Unit test: 15 questions after the 3 lessons and the grammar rule of a unit (75% to pass). Level test: 30 questions after the 4 unit tests. The placement test finds your level and opens all levels below it.');
  const i=a.indexOf(':'),k=a.slice(0,i),v=a.slice(i+1);if(k=='gram')go('gram',+v);else if(k=='lesson'){P=0;go('lesson',+v)}else if(k=='go')go(v);else if(k=='say')say(v)}
-function hBot2(t){HO=1;$('#hp').hidden=false;hBot(t)}
+function hBot2(t){if(!HO)hOpen();hBot(t)}
 function hNext(){const cl=curLevel(),l=LS.filter(x=>x.lv==cl&&S.done[x.id]==null&&lessonOpen(x))[0];if(l){P=0;go('lesson',l.id)}else go('learn')}
 function hAns(q){const t=q.toLowerCase();let tx=t;Object.keys(AR).forEach(k=>{if(q.includes(k))tx+=' '+AR[k]});
  const tok=tx.replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>2&&!['the','and','how','what','does','explain','rule','grammar','about','tell','can','you','with','for','use','when','why','meaning','mean','word','lesson','where','find','show','please'].includes(w));
@@ -372,7 +375,7 @@ function regSW(){if(!('serviceWorker' in navigator))return;navigator.serviceWork
  let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(rl||!UPD)return;rl=1;location.reload()})}
 function streak(){let n=0;const d=new Date(),k=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');if(!S.days[k(d)])d.setDate(d.getDate()-1);while(S.days[k(d)]){n++;d.setDate(d.getDate()-1)}return n}
 function vHome(){const cl=curLevel(),nm=S.set.name?', '+esc(S.set.name):'',rv=Math.max(...Object.keys(CT).filter(k=>+k<=cl).map(Number));
- return`<h1>HOME</h1><p class=mut>Welcome${nm}. Your level: <b>Level ${cl} · ${LV[cl-1]}</b> · ${doneN()} of ${LS.length} lessons finished · about ${CEFR(cl)}.</p>
+ return`<h1>HOME</h1>${S.placed?'':`<div class=card style="border-color:var(--ac2)"><b>Take the placement test to start studying</b><p class=mut>You can look around the app now. To study lessons you first need your level. <span class=ar>حدّد مستواك أولًا لتبدأ الدراسة.</span></p><button class=btn type=button onclick="go('test')">Take the placement test</button></div>`}<p class=mut>Welcome${nm}. Your level: <b>Level ${cl} · ${LV[cl-1]}</b> · ${doneN()} of ${LS.length} lessons finished · about ${CEFR(cl)}.</p>
  ${CT[cl]?'':`<div class=card><b>Lessons for Level ${cl} are still being written.</b><p class=mut>Your level is saved and open. Until the lessons arrive you can review Level ${rv}.</p><button class=btn2 onclick="OL=${rv};go('learn')">Open Level ${rv}</button></div>`}
  <div class=card><b>Daily goal</b> <span class=mut>${Math.min(S.days[today()]||0,S.set.goal)} of ${S.set.goal} quiz${S.set.goal>1?'zes':''} passed today · 🔥 ${streak()}-day streak</span><div class=bar><i style="width:${Math.min(100,(S.days[today()]||0)/S.set.goal*100)}%"></i></div></div>
  <div class=sks>${sk('Vocabulary','')}${sk('Reading','c3')}${sk('Listening','c2')}${sk('Grammar','c4')}${sk('Writing','')}${sk('Speaking','c2')}</div><div class=two>${todo()}${cal()}</div>`}
@@ -477,10 +480,10 @@ function startLesson(id){const l=LM[id];POOL=lvWords(l.lv);
  runQuiz(sh([...sh(l.w).map(mc),lsq(rnd(l.l)),lsq(rnd(l.l)),tw(l.w[2]),dsq(dsOf(l)),ordQ(l.s),rdq(l,Math.random()*3|0)]),l.t,pct=>{const ok=pct>=75;if(ok){S.done[id]=Math.max(S.done[id]||0,pct);S.days[today()]=(S.days[today()]||0)+1;l.w.forEach(w=>{if(!S.vocab[w.en])S.vocab[w.en]={ar:w.ar,box:0,due:Date.now(),t:Date.now()}});save()}
   const nx=ok&&l.n<3?`<button class=btn onclick="P=0;go('lesson',${id+1})">Next lesson</button> `:ok&&l.n==3?`<button class=btn onclick="go('gram',${l.gu})">Next: Grammar rule</button> `:'';
   return`<h1>${pct}%</h1>${ok?cele('Well done'+nmS()+'!','Lesson passed. The words were added to your Review list.'):'<p>You need 75% to pass. Review the lesson and try again.</p>'}${nx}<button class=btn2 onclick="P=0;go('lesson',${id})">Back to lesson</button> <button class=btn2 onclick="OL=${l.lv};go('learn')">Learning map</button>`})}
-function startUT(gu){const n=Math.floor(gu/4)+1;POOL=lvWords(n);const lz=LS.filter(l=>l.gu==gu),ws=sh(lz.flatMap(l=>l.w));
+function startUT(gu){if(needTest())return;const n=Math.floor(gu/4)+1;POOL=lvWords(n);const lz=LS.filter(l=>l.gu==gu),ws=sh(lz.flatMap(l=>l.w));
  runQuiz(sh([...ws.slice(0,5).map(mc),...ws.slice(5,7).map(tw),...sh(lz).slice(0,2).map(l=>dsq(dsOf(l))),...lz.map(l=>lsq(rnd(l.l))),...lz.map(l=>rdq(l,Math.random()*3|0))]),'Unit '+(gu%4+1)+' test',pct=>{const ok=pct>=75;S.ut[gu]=Math.max(S.ut[gu]||0,pct);if(ok)S.days[today()]=(S.days[today()]||0)+1;save();
   return`<h1>${pct}%</h1>${ok?cele('Well done'+nmS()+'!','Unit '+(gu%4+1)+' complete. '+(gu%4<3?'The next unit is open now.':'The level test is open now.')):''}`+wrap(ok?'':'Review this unit and try again.',ok,`<button class=btn onclick="OL=${n};go('learn')">Learning map</button>`)})}
-function startLT(n){POOL=lvWords(n);const lz=LS.filter(l=>l.lv==n),ws=sh(POOL),pb=[...PB].sort((a,b)=>Math.abs(a[0]-n)-Math.abs(b[0]-n)||Math.random()-.5).slice(0,2).map(pbQ),R=()=>rnd(lz);
+function startLT(n){if(needTest())return;POOL=lvWords(n);const lz=LS.filter(l=>l.lv==n),ws=sh(POOL),pb=[...PB].sort((a,b)=>Math.abs(a[0]-n)-Math.abs(b[0]-n)||Math.random()-.5).slice(0,2).map(pbQ),R=()=>rnd(lz);
  runQuiz(sh([...ws.slice(0,6).map(mc),...ws.slice(6,9).map(tw),...Array.from({length:4},()=>dsq(dsOf(R()))),...sh(lz).slice(0,6).map(l=>lsq(rnd(l.l))),...sh(lz).slice(0,6).map(l=>rdq(l,Math.random()*3|0)),...sh(lz).slice(0,3).map(l=>ordQ(l.s)),...pb]),'Level '+n+' test',pct=>{const ok=pct>=75;S.lt[n]=Math.max(S.lt[n]||0,pct);save();
   const nxt=n<20?(CT[n+1]?'Level '+(n+1)+' is open now.':'Level '+(n+1)+' is open (lessons are being written).'):'';
   return`<h1>${pct}%</h1>${ok?cele('Well done'+nmS()+'!','You finished Level '+n+(n<20?' and moved to Level '+(n+1)+' now.':'.')):''}`+wrap(ok?'You finished Level '+n+'. '+nxt:'Review the units that felt hard and try again.',ok,ok?`<button class=btn onclick="go('cert',${n})">Get certificate</button> <button class=btn2 onclick="go('learn')">Learning map</button>`:`<button class=btn onclick="OL=${n};go('learn')">Learning map</button>`)})}
@@ -600,7 +603,7 @@ const pMean=p=>{let s=0,z=0;p.forEach((v,i)=>{s+=v*PTH[i];z+=v});return s/z};
 const pMed=p=>{let z=p.reduce((a,b)=>a+b,0),c=0;for(let i=0;i<p.length;i++){c+=p[i];if(c>=z/2)return PTH[i]}return 20};
 function pickQ(a){const th=pMean(a.post),free=PB.filter(x=>!a.u[x[1]]);free.sort((x,y)=>Math.abs(x[0]-th)-Math.abs(y[0]-th));
  const c=rnd(free.slice(0,Math.min(4,free.length)));a.u[c[1]]=1;a.h.push(c[0]);a.k.push(c[2]?1:0);return pbQ(c)}
-function vTest(){const t=S.test;return`<h1>PLACEMENT TEST</h1>${S.placed?'':'<p>Welcome'+nmS()+'! Take this test first so we can find your exact level.</p>'}<div class=card><p>24 adaptive questions across 20 levels: grammar, vocabulary, reading, listening and writing. A correct answer makes the next question harder. A wrong answer makes it easier. The questions are different for every learner. At the end you get your exact level and every level up to it opens. Take your time and do not guess. It is an estimate, not an official exam, and it does not test speaking.</p>
+function vTest(){const t=S.test;return`<h1>PLACEMENT TEST</h1>${S.placed?'':GATE?'<div class=card style="border-color:var(--ac2)"><b>Take the placement test first</b><p>To start studying we need to know your level. It takes a few minutes. After it, the levels below yours open for study. <span class=ar>قم بتحديد المستوى أولًا ثم ابدأ الدراسة.</span></p></div>':'<p>Welcome'+nmS()+'! Take this test first so we can find your exact level.</p>'}<div class=card><p>24 adaptive questions across 20 levels: grammar, vocabulary, reading, listening and writing. A correct answer makes the next question harder. A wrong answer makes it easier. The questions are different for every learner. At the end you get your exact level and every level up to it opens. Take your time and do not guess. It is an estimate, not an official exam, and it does not test speaking.</p>
 ${t?`<p class=mut>Last result: Level ${t.lvl||'?'} (${CEFR(t.lvl||1)}) on ${t.date}</p>`:''}<button class=btn onclick="startTest()">${S.placed?'Retake the test':'Start the test'}</button></div>`}
 function placeLevel(a){const med=pMed(a.post),hc=Math.max(0,...a.r.filter(x=>x[1]).map(x=>x[0]));let lvl=Math.round(med-.25);lvl=Math.max(1,Math.min(20,Math.min(lvl,hc+2)));if(!hc)lvl=1;return lvl}
 function startTest(){const a={h:[],k:[],u:{},r:[],n:24,post:PTH.map(()=>1)};const first=pickQ(a);
@@ -681,6 +684,7 @@ document.addEventListener('visibilitychange',()=>{if(sb&&SESS){if(document.visib
 addEventListener('online',async()=>{if(!sb)return;if(!SESS&&isC(USER)){try{const r=await sb.auth.getSession();if(r.data.session)await onSignedIn(r.data.session);else forget()}catch(e){}}else syncNow()});
 addEventListener('offline',()=>{if(SESS)setSync('off')});
 addEventListener('load',regSW);
+addEventListener('keydown',e=>{if(e.key=='Escape'){if($('#zm'))$('#zm').remove();else hClose()}});
 document.addEventListener('focusin',e=>{const t=e.target;if(t&&/INPUT|TEXTAREA/.test(t.tagName))setTimeout(()=>{try{t.scrollIntoView({block:'center',behavior:'smooth'})}catch(x){}},320)});
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 (function(){const sp=$('#splash');if(!sp)return;let seen=0;try{seen=sessionStorage.getItem('ef_sp')}catch(e){}const end=()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),600)};if(seen){sp.remove();return}try{sessionStorage.setItem('ef_sp','1')}catch(e){}sp.onclick=end;sp.addEventListener('touchstart',end,{passive:true});setTimeout(end,matchMedia('(prefers-reduced-motion:reduce)').matches?1200:2600)})();
